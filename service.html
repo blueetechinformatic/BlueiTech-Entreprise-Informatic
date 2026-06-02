@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Services BLUE iTECH — Maintenance informatique, réseaux, développement logiciel, cybersécurité, vidéosurveillance et Wi-Fi pro à Lomé, Togo.">
+  <title>Services — BLUE iTECH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="_shared.css">
+  <style>
+    /* ── Service Detail Cards ── */
+    .service-detail {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 72px; align-items: center; padding: 72px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .service-detail:last-child { border-bottom: none; }
+    .service-detail.reverse .service-detail-text { order: 2; }
+    .service-detail.reverse .service-detail-visual { order: 1; }
+
+    .service-detail-visual {
+      border-radius: var(--radius-lg); overflow: hidden;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 80px; position: relative;
+      box-shadow: var(--shadow-lg);
+    }
+    .service-detail-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,198,255,0.15), transparent);
+    }
+    .service-detail-visual .grid-overlay {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                        linear-gradient(90deg,rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .service-detail-visual span { position: relative; z-index: 1; }
+
+    .service-detail-badge {
+      position: absolute; bottom: 20px; left: 20px; z-index: 2;
+      background: rgba(255,255,255,0.12); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px; padding: 10px 16px;
+      font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700;
+      color: #fff;
+    }
+
+    .service-detail-num {
+      font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 12px;
+    }
+    .service-detail-text h2 { margin-bottom: 16px; font-size: 2rem; }
+    .service-detail-text p { color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 20px; }
+
+    .service-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .service-feature {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--text);
+    }
+    .service-feature-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--blue); flex-shrink: 0;
+    }
+
+    /* ── Pricing teaser ── */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .pricing-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 36px 28px;
+      text-align: center; position: relative; overflow: hidden;
+      transition: transform .22s, box-shadow .22s, border-color .22s;
+    }
+    .pricing-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .pricing-card.featured {
+      border-color: var(--blue);
+      background: linear-gradient(160deg, #f0f5ff 0%, #fff 60%);
+      box-shadow: var(--shadow-md);
+    }
+    .pricing-featured-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--blue); color: #fff;
+      font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 50px;
+    }
+    .pricing-icon { font-size: 36px; margin-bottom: 16px; }
+    .pricing-card h3 { font-size: 18px; margin-bottom: 8px; }
+    .pricing-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+    .pricing-list { list-style: none; text-align: left; display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+    .pricing-list li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
+    .pricing-list li i { color: var(--blue); font-size: 12px; flex-shrink: 0; }
+
+    /* ── Process steps ── */
+    .process-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+    .process-steps::before {
+      content: ''; position: absolute;
+      top: 28px; left: 12.5%; right: 12.5%;
+      height: 2px; background: linear-gradient(90deg,var(--blue),var(--accent));
+      z-index: 0;
+    }
+    .process-step { text-align: center; padding: 0 16px; position: relative; z-index: 1; }
+    .process-step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg,var(--blue),var(--blue-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 800; color: #fff;
+      margin: 0 auto 18px; box-shadow: 0 4px 18px rgba(0,87,255,0.35);
+    }
+    .process-step h4 { font-size: 15px; margin-bottom: 8px; }
+    .process-step p { font-size: 13px; color: var(--text-muted); }
+
+    /* FAQ section */
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+    @media(max-width:992px){
+      .service-detail { grid-template-columns: 1fr; gap: 36px; }
+      .service-detail.reverse .service-detail-text,
+      .service-detail.reverse .service-detail-visual { order: unset; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .process-steps::before { display: none; }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+    @media(max-width:600px){
+      .process-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+      </div>
+      <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="service.html" class="active">Services</a></li>
+      <li><a href="boutique.html">Réalisations</a></li>
+      <li><a href="shop.html">Boutique</a></li>
+      <li><a href="formation.html">Formation</a></li>
+      <li><a href="propos.html">À propos</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Devis gratuit</a>
+    </div>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html">Accueil</a><a href="service.html">Services</a>
+  <a href="boutique.html">Réalisations</a><a href="shop.html">Boutique</a><a href="formation.html">Formation</a>
+  <a href="propos.html">À propos</a><a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn-primary">Demander un devis</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="hero-bg page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="tag white" data-aos>Nos expertises</div>
+    <h1 data-aos data-aos-delay="100">Nos <span style="color:var(--accent)">Services</span></h1>
+    <p data-aos data-aos-delay="200">Des solutions IT complètes, adaptées à chaque besoin, portées par une équipe d'experts passionnés.</p>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:28px;" data-aos data-aos-delay="300">
+      <a href="contact.html" class="btn btn-white"><i class="fas fa-file-invoice"></i> Demander un devis</a>
+      <a href="https://wa.me/90146415" class="btn btn-ghost" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE CARDS OVERVIEW -->
+<section class="section-sm" style="background:var(--off-white);">
+  <div class="container">
+    <div class="card-grid-4">
+      <div class="card-service" data-aos style="text-align:center;padding:24px 18px;">
+        <div class="card-service-icon" style="margin:0 auto 14px;"><i class="fas fa-laptop-medical"></i></div>
+        <h3 style="font-size:15px;">Maintenance IT</h3>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="100" style="text-align:center;padding:24px 18px;">
+        <div class="card-service-icon" style="margin:0 auto 14px;"><i class="fas fa-network-wired"></i></div>
+        <h3 style="font-size:15px;">Réseaux</h3>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="200" style="text-align:center;padding:24px 18px;">
+        <div class="card-service-icon" style="margin:0 auto 14px;"><i class="fas fa-code"></i></div>
+        <h3 style="font-size:15px;">Développement</h3>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="300" style="text-align:center;padding:24px 18px;">
+        <div class="card-service-icon" style="margin:0 auto 14px;"><i class="fas fa-shield-alt"></i></div>
+        <h3 style="font-size:15px;">Cybersécurité</h3>
+      </div>
+      <div class="card-service" data-aos style="text-align:center;padding:24px 18px;">
+        <div class="card-service-icon" style="margin:0 auto 14px;"><i class="fas fa-camera"></i></div>
+        <h3 style="font-size:15px;">Vidéosurveillance</h3>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="100" style="text-align:center;padding:24px 18px;">
+        <div class="card-service-icon" style="margin:0 auto 14px;"><i class="fas fa-wifi"></i></div>
+        <h3 style="font-size:15px;">Wi-Fi Pro</h3>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="200" style="text-align:center;padding:24px 18px;">
+        <div class="card-service-icon" style="margin:0 auto 14px;"><i class="fas fa-cloud"></i></div>
+        <h3 style="font-size:15px;">Cloud & Hébergement</h3>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="300" style="text-align:center;padding:24px 18px;">
+        <div class="card-service-icon" style="margin:0 auto 14px;"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3 style="font-size:15px;">Formation IT</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE DETAILS -->
+<section class="section">
+  <div class="container">
+
+    <div class="service-detail" data-aos>
+      <div class="service-detail-visual" style="font-size:0;">
+        <div class="grid-overlay"></div>
+        <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=700&q=80&auto=format&fit=crop" alt="Maintenance informatique" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1;">
+        <div class="service-detail-badge">⚡ Intervention sous 24h</div>
+      </div>
+      <div class="service-detail-text">
+        <div class="service-detail-num">01 — Maintenance Informatique</div>
+        <h2>Gardez vos équipements <span style="color:var(--blue)">performants</span></h2>
+        <p>Nous assurons le diagnostic, la réparation et l'entretien préventif de tous vos équipements : ordinateurs, imprimantes, serveurs et périphériques. Notre équipe intervient rapidement pour minimiser les interruptions.</p>
+        <div class="service-features">
+          <div class="service-feature"><div class="service-feature-dot"></div> Diagnostic complet et réparation matérielle</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Installation et mise à jour de logiciels</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Maintenance préventive planifiée</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Récupération de données perdues</div>
+        </div>
+        <a href="contact.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Demander ce service</a>
+      </div>
+    </div>
+
+    <div class="service-detail reverse" data-aos>
+      <div class="service-detail-text">
+        <div class="service-detail-num">02 — Réseaux & Infrastructures</div>
+        <h2>Connectivité <span style="color:var(--blue)">fiable</span> et sécurisée</h2>
+        <p>Nous concevons, installons et gérons vos infrastructures réseau : câblage structuré, commutateurs, routeurs, VPN et systèmes de surveillance. Une architecture robuste pour votre croissance.</p>
+        <div class="service-features">
+          <div class="service-feature"><div class="service-feature-dot"></div> Câblage structuré Cat6/Cat6A/Fibre</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Configuration routeurs et commutateurs</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Mise en place de VPN sécurisés</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Monitoring et supervision réseau</div>
+        </div>
+        <a href="contact.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Demander ce service</a>
+      </div>
+      <div class="service-detail-visual" style="font-size:0;">
+        <div class="grid-overlay"></div>
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=700&q=80&auto=format&fit=crop" alt="Réseaux infrastructures" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1;">
+        <div class="service-detail-badge">🔒 Sécurisé par défaut</div>
+      </div>
+    </div>
+
+    <div class="service-detail" data-aos>
+      <div class="service-detail-visual" style="font-size:0;">
+        <div class="grid-overlay"></div>
+        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80&auto=format&fit=crop" alt="Développement logiciel" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1;">
+        <div class="service-detail-badge">🚀 Livraison agile</div>
+      </div>
+      <div class="service-detail-text">
+        <div class="service-detail-num">03 — Développement Logiciel</div>
+        <h2>Applications <span style="color:var(--blue)">sur mesure</span></h2>
+        <p>Nous créons des applications web, mobiles et des logiciels de gestion adaptés à vos processus métier. Du cahier des charges à la mise en production, nous vous accompagnons à chaque étape.</p>
+        <div class="service-features">
+          <div class="service-feature"><div class="service-feature-dot"></div> Sites web et applications web modernes</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Applications mobiles Android & iOS</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Logiciels de gestion (ERP, CRM, POS)</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> APIs et intégrations systèmes</div>
+        </div>
+        <a href="contact.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Demander ce service</a>
+      </div>
+    </div>
+
+    <div class="service-detail reverse" data-aos>
+      <div class="service-detail-text">
+        <div class="service-detail-num">04 — Vidéosurveillance</div>
+        <h2>Sécurisez vos <span style="color:var(--blue)">locaux</span></h2>
+        <p>Installation de systèmes de vidéosurveillance IP et analogiques pour commerces, entreprises et résidences. Visualisation à distance, enregistrement et alertes en temps réel.</p>
+        <div class="service-features">
+          <div class="service-feature"><div class="service-feature-dot"></div> Caméras IP HD/4K intérieur & extérieur</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Enregistreurs NVR/DVR avec stockage</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Accès à distance via smartphone</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Détection de mouvement et alertes</div>
+        </div>
+        <a href="contact.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Demander ce service</a>
+      </div>
+      <div class="service-detail-visual" style="font-size:0;">
+        <div class="grid-overlay"></div>
+        <img src="https://images.unsplash.com/photo-1557597774-9d475d030a96?w=700&q=80&auto=format&fit=crop" alt="Vidéosurveillance CCTV" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1;">
+        <div class="service-detail-badge">👁️ Surveillance 24/7</div>
+      </div>
+    </div>
+
+    <div class="service-detail" data-aos>
+      <div class="service-detail-visual" style="font-size:0;">
+        <div class="grid-overlay"></div>
+        <img src="https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=700&q=80&auto=format&fit=crop" alt="Wi-Fi professionnel hotspot" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1;">
+        <div class="service-detail-badge">⚡ Haut débit garanti</div>
+      </div>
+      <div class="service-detail-text">
+        <div class="service-detail-num">05 — Solutions Wi-Fi Professionnelles</div>
+        <h2>Wi-Fi <span style="color:var(--blue)">managé</span> et hotspots</h2>
+        <p>Déploiement de solutions Wi-Fi d'entreprise avec couverture optimale, portails captifs personnalisés et gestion centralisée. Idéal pour hôtels, restaurants, bureaux et espaces publics.</p>
+        <div class="service-features">
+          <div class="service-feature"><div class="service-feature-dot"></div> Points d'accès Wi-Fi 6 haute densité</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Portail captif personnalisé (MikroTik)</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Gestion des accès et des tickets</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Monitoring et rapports d'utilisation</div>
+        </div>
+        <a href="contact.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Demander ce service</a>
+      </div>
+    </div>
+
+    <div class="service-detail reverse" data-aos>
+      <div class="service-detail-text">
+        <div class="service-detail-num">06 — Cybersécurité</div>
+        <h2>Protégez vos <span style="color:var(--blue)">données</span></h2>
+        <p>Audit de sécurité, mise en place de pare-feu, antivirus entreprise, VPN et politique de sauvegarde. Nous sécurisons votre système d'information contre les cybermenaces.</p>
+        <div class="service-features">
+          <div class="service-feature"><div class="service-feature-dot"></div> Audit et test d'intrusion (pentest)</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Pare-feu et filtrage de contenu</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Sauvegarde et plan de reprise</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Sensibilisation des équipes</div>
+        </div>
+        <a href="contact.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Demander ce service</a>
+      </div>
+      <div class="service-detail-visual" style="font-size:0;">
+        <div class="grid-overlay"></div>
+        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=700&q=80&auto=format&fit=crop" alt="Cybersécurité" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1;">
+        <div class="service-detail-badge">🔐 Certifié sécurisé</div>
+      </div>
+    </div>
+
+    <div class="service-detail" data-aos>
+      <div class="service-detail-visual" style="font-size:0;">
+        <div class="grid-overlay"></div>
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=700&q=80&auto=format&fit=crop" alt="Cloud et hébergement" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1;">
+        <div class="service-detail-badge">⏱️ 99.9% uptime</div>
+      </div>
+      <div class="service-detail-text">
+        <div class="service-detail-num">07 — Cloud & Hébergement</div>
+        <h2>Votre infrastructure <span style="color:var(--blue)">dans le cloud</span></h2>
+        <p>Migration cloud, hébergement de serveurs virtuels, messagerie professionnelle et sauvegarde en ligne. Profitez de la flexibilité du cloud avec notre accompagnement expert.</p>
+        <div class="service-features">
+          <div class="service-feature"><div class="service-feature-dot"></div> Hébergement web & serveurs VPS</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Migration vers le cloud (AWS, Azure)</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Messagerie professionnelle G Suite / M365</div>
+          <div class="service-feature"><div class="service-feature-dot"></div> Sauvegarde automatique et sécurisée</div>
+        </div>
+        <a href="contact.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Demander ce service</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESSUS -->
+<section class="section" style="background:var(--off-white);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div class="tag" data-aos>Notre méthode</div>
+      <h2 class="section-title" data-aos data-aos-delay="100">Comment nous <span class="hl">travaillons</span></h2>
+      <p class="section-sub" data-aos data-aos-delay="200" style="margin:0 auto;">Un processus clair, transparent et orienté résultats.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step" data-aos>
+        <div class="process-step-num">1</div>
+        <h4>Analyse</h4>
+        <p>Nous écoutons vos besoins et analysons votre environnement actuel.</p>
+      </div>
+      <div class="process-step" data-aos data-aos-delay="150">
+        <div class="process-step-num">2</div>
+        <h4>Proposition</h4>
+        <p>Nous vous soumettons une solution adaptée avec devis détaillé.</p>
+      </div>
+      <div class="process-step" data-aos data-aos-delay="300">
+        <div class="process-step-num">3</div>
+        <h4>Réalisation</h4>
+        <p>Notre équipe déploie la solution avec rigueur et professionnalisme.</p>
+      </div>
+      <div class="process-step" data-aos data-aos-delay="450">
+        <div class="process-step-num">4</div>
+        <h4>Suivi</h4>
+        <p>Nous assurons le support et la maintenance pour une tranquillité totale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="faq-grid">
+      <div>
+        <div class="tag" data-aos>FAQ</div>
+        <h2 class="section-title" data-aos data-aos-delay="100">Questions <span class="hl">fréquentes</span></h2>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.8;margin-bottom:28px;" data-aos data-aos-delay="200">Vous avez d'autres questions ? Contactez-nous directement.</p>
+        <a href="contact.html" class="btn btn-primary" data-aos data-aos-delay="300"><i class="fas fa-headset"></i> Nous contacter</a>
+      </div>
+      <div>
+        <div class="faq-item" data-aos>
+          <button class="faq-btn" onclick="toggleFaq(this)">Quels sont vos délais d'intervention ?<i class="fas fa-chevron-down faq-chevron"></i></button>
+          <div class="faq-body">Pour les urgences, nous intervenons généralement sous 24h à Lomé. Pour les projets planifiés, nous définissons ensemble un calendrier adapté à vos contraintes.</div>
+        </div>
+        <div class="faq-item" data-aos>
+          <button class="faq-btn" onclick="toggleFaq(this)">Proposez-vous des contrats de maintenance ?<i class="fas fa-chevron-down faq-chevron"></i></button>
+          <div class="faq-body">Oui, nous proposons des contrats de maintenance annuels qui incluent des visites préventives, une assistance téléphonique prioritaire et des tarifs préférentiels sur les interventions.</div>
+        </div>
+        <div class="faq-item" data-aos>
+          <button class="faq-btn" onclick="toggleFaq(this)">Travaillez-vous avec les particuliers ?<i class="fas fa-chevron-down faq-chevron"></i></button>
+          <div class="faq-body">Absolument ! Nous accompagnons aussi bien les particuliers que les PME et grandes entreprises. Nos tarifs sont adaptés à chaque profil client.</div>
+        </div>
+        <div class="faq-item" data-aos>
+          <button class="faq-btn" onclick="toggleFaq(this)">Comment obtenir un devis ?<i class="fas fa-chevron-down faq-chevron"></i></button>
+          <div class="faq-body">Remplissez notre formulaire de contact ou contactez-nous directement par WhatsApp. Nous vous répondons rapidement avec un devis personnalisé et sans engagement.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-banner" data-aos>
+      <div class="cta-banner-text">
+        <h2>Un projet en tête ?</h2>
+        <p>Discutons de vos besoins et trouvons la meilleure solution ensemble.</p>
+      </div>
+      <div class="cta-banner-actions">
+        <a href="contact.html" class="btn btn-white"><i class="fas fa-file-invoice"></i> Devis gratuit</a>
+        <a href="https://wa.me/90146415" target="_blank" class="btn btn-ghost"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-icon">
+            <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+          </div>
+          <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+        </a>
+        <p>Votre partenaire IT de confiance à Lomé, Togo. Solutions fiables, innovantes et sécurisées.</p>
+        <div class="footer-socials">
+          <a href="https://wa.me/90146415" class="footer-social" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Services</h4><ul>
+        <li><a href="service.html"><i class="fas fa-chevron-right"></i> Maintenance IT</a></li>
+        <li><a href="service.html"><i class="fas fa-chevron-right"></i> Réseaux</a></li>
+        <li><a href="service.html"><i class="fas fa-chevron-right"></i> Développement</a></li>
+        <li><a href="service.html"><i class="fas fa-chevron-right"></i> Vidéosurveillance</a></li>
+        <li><a href="service.html"><i class="fas fa-chevron-right"></i> Wi-Fi Pro</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Entreprise</h4><ul>
+        <li><a href="propos.html"><i class="fas fa-chevron-right"></i> À propos</a></li>
+        <li><a href="boutique.html"><i class="fas fa-chevron-right"></i> Réalisations</a></li>
+        <li><a href="formation.html"><i class="fas fa-chevron-right"></i> Formations</a></li>
+        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul>
+        <li><a href="https://wa.me/90146415"><i class="fab fa-whatsapp"></i> +228 90 14 64 15</a></li>
+        <li><a href="mailto:contact@blueitech.tg"><i class="fas fa-envelope"></i> contact@blueitech.tg</a></li>
+        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Lomé, Togo</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span>BLUE iTECH</span>. Tous droits réservés.</p>
+      <p>Conçu avec ❤️ à <span>Lomé, Togo</span></p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/90146415" target="_blank" class="wa-float"><svg viewBox="0 0 1024 1024"><defs><linearGradient id="waG" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#61fd7d"/><stop offset="1" stop-color="#2bb826"/></linearGradient></defs><circle cx="512" cy="512" r="500" fill="url(#waG)"/><path fill="#fff" d="M783.302 243.246c-69.329-69.387-161.529-107.619-259.763-107.658-202.402 0-367.133 164.668-367.214 367.072-.026 64.699 16.883 127.854 49.017 183.522l-52.096 190.229 194.665-51.047c53.636 29.244 114.022 44.656 175.482 44.682h.151c202.382 0 367.128-164.688 367.21-367.094.039-98.087-38.121-190.319-107.452-259.706zM523.544 808.047h-.125c-54.767-.021-108.483-14.729-155.344-42.529l-11.146-6.612-115.517 30.293 30.834-112.592-7.259-11.544c-30.552-48.579-46.688-104.729-46.664-162.379.066-168.229 136.985-305.096 305.339-305.096 81.521.031 158.154 31.811 215.779 89.482s89.342 134.332 89.312 215.859c-.066 168.243-136.984 305.118-305.209 305.118zm167.415-228.515c-9.177-4.591-54.286-26.782-62.697-29.843-8.41-3.062-14.526-4.592-20.645 4.592-6.115 9.182-23.699 29.843-29.053 35.964-5.352 6.122-10.704 6.888-19.879 2.296-9.176-4.591-38.74-14.277-73.786-45.526-27.275-24.319-45.691-54.359-51.043-63.543-5.352-9.183-.569-14.146 4.024-18.72 4.127-4.109 9.175-10.713 13.763-16.069 4.587-5.355 6.117-9.183 9.175-15.304 3.059-6.122 1.529-11.479-.765-16.07-2.293-4.591-20.644-49.739-28.29-68.104-7.447-17.886-15.013-15.466-20.645-15.747-5.346-.266-11.469-.322-17.585-.322s-16.057 2.295-24.467 11.478-32.113 31.374-32.113 76.521c0 45.147 32.877 88.764 37.465 94.885 4.588 6.122 64.699 98.771 156.741 138.502 21.892 9.45 38.982 15.094 52.308 19.322 21.98 6.979 41.982 5.995 57.793 3.634 17.628-2.633 54.284-22.189 61.932-43.615 7.646-21.427 7.646-39.791 5.352-43.617-2.294-3.826-8.41-6.122-17.585-10.714z"/></svg></a>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);});
+document.getElementById('navToggle').addEventListener('click',()=>{document.getElementById('navMobile').classList.toggle('open');});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('aos-animate');});},{threshold:0.12});
+document.querySelectorAll('[data-aos]').forEach(el=>obs.observe(el));
+function toggleFaq(btn){
+  const item=btn.parentElement, body=item.querySelector('.faq-body');
+  document.querySelectorAll('.faq-item.open').forEach(i=>{if(i!==item){i.classList.remove('open');i.querySelector('.faq-body').classList.remove('open');}});
+  item.classList.toggle('open'); body.classList.toggle('open');
+}
+</script>
+</body>
+</html>

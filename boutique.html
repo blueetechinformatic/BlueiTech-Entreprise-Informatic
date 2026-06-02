@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Réalisations BLUE iTECH — Portfolio de projets IT : réseaux, Wi-Fi, développement web, vidéosurveillance à Lomé, Togo.">
+  <title>Réalisations — BLUE iTECH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="_shared.css">
+  <style>
+    /* Filter tabs */
+    .filter-tabs { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:40px; }
+    .filter-tab {
+      padding:9px 22px; border-radius:50px;
+      border: 1.5px solid var(--border);
+      font-family:'Sora',sans-serif; font-size:13px; font-weight:700;
+      color:var(--text-muted); cursor:pointer;
+      transition:all .2s; background:transparent;
+    }
+    .filter-tab:hover, .filter-tab.active {
+      background:var(--blue); color:#fff; border-color:var(--blue);
+      box-shadow:0 4px 16px rgba(0,87,255,0.35);
+    }
+
+    /* Masonry-style grid */
+    .portfolio-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+    }
+    .portfolio-card {
+      border-radius:var(--radius-lg); overflow:hidden;
+      position:relative; background:var(--dark-2);
+      aspect-ratio:4/3;
+      cursor:pointer;
+      transition:transform .25s, box-shadow .25s;
+      box-shadow:var(--shadow-sm);
+    }
+    .portfolio-card:hover { transform:translateY(-6px) scale(1.01); box-shadow:var(--shadow-lg); }
+    .portfolio-card.tall { grid-row:span 2; aspect-ratio:auto; min-height:400px; }
+
+    .portfolio-bg {
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:60px; position:relative;
+    }
+    .portfolio-bg-1 { background:linear-gradient(135deg,#001E80,#0057FF); }
+    .portfolio-bg-2 { background:linear-gradient(135deg,#004040,#00A0A0); }
+    .portfolio-bg-3 { background:linear-gradient(135deg,#400020,#A00050); }
+    .portfolio-bg-4 { background:linear-gradient(135deg,#203000,#507000); }
+    .portfolio-bg-5 { background:linear-gradient(135deg,#300040,#8000A0); }
+    .portfolio-bg-6 { background:linear-gradient(135deg,#401000,#A03000); }
+    .portfolio-bg-7 { background:linear-gradient(135deg,#002040,#0060B0); }
+    .portfolio-bg-8 { background:linear-gradient(135deg,#001530,#004090); }
+    .portfolio-bg-9 { background:linear-gradient(135deg,#300000,#800020); }
+
+    .portfolio-grid-overlay {
+      position:absolute; inset:0;
+      background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                       linear-gradient(90deg,rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size:25px 25px;
+    }
+    .portfolio-card-emoji { position:relative; z-index:1; font-size:56px; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3)); }
+
+    .portfolio-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top, rgba(6,13,31,0.95) 0%, rgba(6,13,31,0.3) 60%, transparent 100%);
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:24px; opacity:0; transition:opacity .3s;
+    }
+    .portfolio-card:hover .portfolio-overlay { opacity:1; }
+    .portfolio-cat {
+      font-family:'Sora',sans-serif; font-size:10px; font-weight:700;
+      letter-spacing:2px; text-transform:uppercase; color:var(--accent);
+      margin-bottom:6px;
+    }
+    .portfolio-title {
+      font-family:'Sora',sans-serif; font-size:16px; font-weight:800; color:#fff;
+      margin-bottom:10px; line-height:1.3;
+    }
+    .portfolio-desc { font-size:12px; color:rgba(255,255,255,0.7); line-height:1.6; margin-bottom:14px; }
+    .portfolio-tags { display:flex; gap:6px; flex-wrap:wrap; }
+    .portfolio-tag {
+      background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);
+      border-radius:50px; padding:3px 10px;
+      font-size:11px; font-weight:600; color:rgba(255,255,255,0.85);
+    }
+
+    /* Always-visible label on mobile */
+    .portfolio-label {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:16px 20px;
+      background:linear-gradient(to top, rgba(6,13,31,0.9), transparent);
+    }
+    .portfolio-label-cat {
+      font-family:'Sora',sans-serif; font-size:10px; font-weight:700;
+      letter-spacing:1.5px; text-transform:uppercase; color:var(--accent);
+    }
+    .portfolio-label-title {
+      font-family:'Sora',sans-serif; font-size:14px; font-weight:700; color:#fff;
+    }
+
+    /* Clients logos */
+    .clients-strip {
+      background:var(--off-white); border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border); padding:48px 0;
+    }
+    .clients-logos {
+      display:flex; align-items:center; justify-content:center;
+      gap:48px; flex-wrap:wrap;
+    }
+    .client-logo {
+      display:flex; align-items:center; gap:10px;
+      font-family:'Sora',sans-serif; font-size:16px; font-weight:800;
+      color:var(--text-muted); opacity:.5; transition:opacity .2s;
+    }
+    .client-logo:hover { opacity:1; color:var(--blue); }
+    .client-logo-icon {
+      width:40px; height:40px; border-radius:10px;
+      background:linear-gradient(135deg,var(--blue),var(--accent));
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px;
+    }
+
+    /* Stats */
+    .stats-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+    .stat-card {
+      background:var(--white); border:1px solid var(--border);
+      border-radius:var(--radius-lg); padding:28px 24px; text-align:center;
+      box-shadow:var(--shadow-sm); transition:transform .2s, box-shadow .2s;
+    }
+    .stat-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); }
+    .stat-card-num {
+      font-family:'Sora',sans-serif; font-size:2.4rem; font-weight:900;
+      color:var(--blue); line-height:1; margin-bottom:6px;
+    }
+    .stat-card-label { font-size:13px; color:var(--text-muted); }
+
+    @media(max-width:992px){
+      .portfolio-grid { grid-template-columns:repeat(2,1fr); }
+      .portfolio-card.tall { grid-row:span 1; aspect-ratio:4/3; min-height:auto; }
+      .stats-cards { grid-template-columns:repeat(2,1fr); }
+      .portfolio-overlay { opacity:1; }
+    }
+    @media(max-width:600px){
+      .portfolio-grid { grid-template-columns:1fr; }
+      .stats-cards { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+      </div>
+      <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li><li><a href="service.html">Services</a></li>
+      <li><a href="boutique.html" class="active">Réalisations</a></li><li><a href="shop.html">Boutique</a></li><li><a href="formation.html">Formation</a></li>
+      <li><a href="propos.html">À propos</a></li><li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta"><a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Devis gratuit</a></div>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html">Accueil</a><a href="service.html">Services</a>
+  <a href="boutique.html">Réalisations</a><a href="shop.html">Boutique</a><a href="formation.html">Formation</a>
+  <a href="propos.html">À propos</a><a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn-primary">Demander un devis</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="hero-bg page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="tag white" data-aos>Portfolio</div>
+    <h1 data-aos data-aos-delay="100">Nos <span style="color:var(--accent)">Réalisations</span></h1>
+    <p data-aos data-aos-delay="200">Des projets concrets qui témoignent de notre expertise et de notre engagement envers l'excellence technique.</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section-sm">
+  <div class="container">
+    <div class="stats-cards">
+      <div class="stat-card" data-aos><div class="stat-card-num">+150</div><div class="stat-card-label">Clients satisfaits</div></div>
+      <div class="stat-card" data-aos data-aos-delay="100"><div class="stat-card-num">+80</div><div class="stat-card-label">Réseaux déployés</div></div>
+      <div class="stat-card" data-aos data-aos-delay="200"><div class="stat-card-num">+40</div><div class="stat-card-label">Sites web créés</div></div>
+      <div class="stat-card" data-aos data-aos-delay="300"><div class="stat-card-num">+60</div><div class="stat-card-label">Caméras installées</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO GRID -->
+<section class="section">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
+      <div>
+        <div class="tag" data-aos>Nos projets</div>
+        <h2 class="section-title" data-aos data-aos-delay="100">Ce que nous avons <span class="hl">réalisé</span></h2>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-tabs" data-aos>
+      <button class="filter-tab active" onclick="filterProjects(this,'all')">Tous</button>
+      <button class="filter-tab" onclick="filterProjects(this,'reseau')">Réseaux</button>
+      <button class="filter-tab" onclick="filterProjects(this,'wifi')">Wi-Fi / Hotspot</button>
+      <button class="filter-tab" onclick="filterProjects(this,'dev')">Développement</button>
+      <button class="filter-tab" onclick="filterProjects(this,'cctv')">Vidéosurveillance</button>
+      <button class="filter-tab" onclick="filterProjects(this,'maintenance')">Maintenance</button>
+    </div>
+
+    <div class="portfolio-grid" id="portfolioGrid">
+
+      <div class="portfolio-card tall" data-cat="reseau" data-aos>
+        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80&auto=format&fit=crop" alt="Infrastructure réseau" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;">
+        <div class="portfolio-overlay">
+          <div class="portfolio-cat">Réseaux & Infrastructures</div>
+          <div class="portfolio-title">Infrastructure réseau PME — Lomé Commerce</div>
+          <div class="portfolio-desc">Déploiement complet d'un réseau d'entreprise : câblage Cat6, routeurs MikroTik, VLAN et supervision centralisée pour 50 postes.</div>
+          <div class="portfolio-tags"><span class="portfolio-tag">MikroTik</span><span class="portfolio-tag">Cat6</span><span class="portfolio-tag">VLAN</span></div>
+        </div>
+        <div class="portfolio-label"><div class="portfolio-label-cat">Réseaux</div><div class="portfolio-label-title">Infrastructure PME</div></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="wifi" data-aos data-aos-delay="100">
+        <img src="https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=500&q=80&auto=format&fit=crop" alt="Hotspot Wi-Fi" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;">
+        <div class="portfolio-overlay">
+          <div class="portfolio-cat">Wi-Fi & Hotspot</div>
+          <div class="portfolio-title">Hotspot Hôtel Le Belvédère</div>
+          <div class="portfolio-desc">Portail captif personnalisé avec gestion des tickets, statistiques en temps réel et couverture totale de l'établissement.</div>
+          <div class="portfolio-tags"><span class="portfolio-tag">MikroTik</span><span class="portfolio-tag">Portail captif</span></div>
+        </div>
+        <div class="portfolio-label"><div class="portfolio-label-cat">Wi-Fi</div><div class="portfolio-label-title">Hotspot Hôtel</div></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="dev" data-aos data-aos-delay="200">
+        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=500&q=80&auto=format&fit=crop" alt="Développement web" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;">
+        <div class="portfolio-overlay">
+          <div class="portfolio-cat">Développement Web</div>
+          <div class="portfolio-title">Site e-commerce Boutique Mode</div>
+          <div class="portfolio-desc">Plateforme e-commerce complète avec panier, paiement Mobile Money et tableau de bord administrateur.</div>
+          <div class="portfolio-tags"><span class="portfolio-tag">React</span><span class="portfolio-tag">Node.js</span><span class="portfolio-tag">Mobile Money</span></div>
+        </div>
+        <div class="portfolio-label"><div class="portfolio-label-cat">Web</div><div class="portfolio-label-title">E-commerce</div></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="cctv" data-aos>
+        <img src="https://images.unsplash.com/photo-1557597774-9d475d030a96?w=500&q=80&auto=format&fit=crop" alt="Vidéosurveillance CCTV" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;">
+        <div class="portfolio-overlay">
+          <div class="portfolio-cat">Vidéosurveillance</div>
+          <div class="portfolio-title">CCTV Supermarché Grand Lomé</div>
+          <div class="portfolio-desc">Installation de 24 caméras IP 4K, NVR 32 canaux et accès mobile pour surveillance à distance.</div>
+          <div class="portfolio-tags"><span class="portfolio-tag">IP 4K</span><span class="portfolio-tag">NVR</span><span class="portfolio-tag">Mobile</span></div>
+        </div>
+        <div class="portfolio-label"><div class="portfolio-label-cat">CCTV</div><div class="portfolio-label-title">Supermarché 24 caméras</div></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="wifi" data-aos data-aos-delay="100">
+        <img src="https://images.unsplash.com/photo-1562408590-e32931084e23?w=500&q=80&auto=format&fit=crop" alt="Wi-Fi communautaire" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;">
+        <div class="portfolio-overlay">
+          <div class="portfolio-cat">Wi-Fi & Hotspot</div>
+          <div class="portfolio-title">Zone Wi-Fi Quartier Hédzranawoé</div>
+          <div class="portfolio-desc">Déploiement d'un réseau Wi-Fi communautaire couvrant un quartier entier avec gestion des abonnements.</div>
+          <div class="portfolio-tags"><span class="portfolio-tag">Outdoor AP</span><span class="portfolio-tag">Ubiquiti</span></div>
+        </div>
+        <div class="portfolio-label"><div class="portfolio-label-cat">Wi-Fi</div><div class="portfolio-label-title">Zone communautaire</div></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="dev" data-aos data-aos-delay="200">
+        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&q=80&auto=format&fit=crop" alt="Application mobile" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;">
+        <div class="portfolio-overlay">
+          <div class="portfolio-cat">Application Mobile</div>
+          <div class="portfolio-title">App de gestion de livraisons</div>
+          <div class="portfolio-desc">Application mobile Android pour la gestion des livraisons en temps réel avec géolocalisation et notifications push.</div>
+          <div class="portfolio-tags"><span class="portfolio-tag">Flutter</span><span class="portfolio-tag">Firebase</span><span class="portfolio-tag">GPS</span></div>
+        </div>
+        <div class="portfolio-label"><div class="portfolio-label-cat">Mobile</div><div class="portfolio-label-title">App livraisons</div></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="reseau" data-aos>
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&q=80&auto=format&fit=crop" alt="Câblage structuré" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;">
+        <div class="portfolio-overlay">
+          <div class="portfolio-cat">Réseaux</div>
+          <div class="portfolio-title">Câblage structuré — Immeuble de bureaux</div>
+          <div class="portfolio-desc">Installation complète du câblage structuré fibre + cuivre pour un immeuble de 5 étages.</div>
+          <div class="portfolio-tags"><span class="portfolio-tag">Fibre</span><span class="portfolio-tag">Panneau brassage</span></div>
+        </div>
+        <div class="portfolio-label"><div class="portfolio-label-cat">Réseaux</div><div class="portfolio-label-title">Câblage immeuble</div></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="maintenance" data-aos data-aos-delay="100">
+        <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=500&q=80&auto=format&fit=crop" alt="Maintenance informatique" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;">
+        <div class="portfolio-overlay">
+          <div class="portfolio-cat">Maintenance IT</div>
+          <div class="portfolio-title">Contrat annuel — Cabinet médical</div>
+          <div class="portfolio-desc">Maintenance préventive mensuelle, support utilisateurs et gestion du parc de 30 postes.</div>
+          <div class="portfolio-tags"><span class="portfolio-tag">Préventif</span><span class="portfolio-tag">Helpdesk</span></div>
+        </div>
+        <div class="portfolio-label"><div class="portfolio-label-cat">Maintenance</div><div class="portfolio-label-title">Cabinet médical</div></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="cctv" data-aos data-aos-delay="200">
+        <img src="https://images.unsplash.com/photo-1580983218765-f663bec07b37?w=500&q=80&auto=format&fit=crop" alt="CCTV résidentiel" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;">
+        <div class="portfolio-overlay">
+          <div class="portfolio-cat">Vidéosurveillance</div>
+          <div class="portfolio-title">Sécurisation villa résidentielle</div>
+          <div class="portfolio-desc">Système CCTV résidentiel avec 8 caméras, détection de mouvement, alarme et notifications WhatsApp.</div>
+          <div class="portfolio-tags"><span class="portfolio-tag">8 caméras</span><span class="portfolio-tag">Alarme</span><span class="portfolio-tag">Alerts</span></div>
+        </div>
+        <div class="portfolio-label"><div class="portfolio-label-cat">CCTV</div><div class="portfolio-label-title">Villa résidentielle</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<div class="clients-strip">
+  <div class="container">
+    <p style="text-align:center;font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:32px;" data-aos>Ils nous font confiance</p>
+    <div class="clients-logos">
+      <div class="client-logo"><div class="client-logo-icon">🏨</div>Hôtel Le Belvédère</div>
+      <div class="client-logo"><div class="client-logo-icon">🛒</div>Grand Lomé Market</div>
+      <div class="client-logo"><div class="client-logo-icon">🏥</div>Cabinet Médical</div>
+      <div class="client-logo"><div class="client-logo-icon">🏢</div>Lomé Commerce</div>
+      <div class="client-logo"><div class="client-logo-icon">🚀</div>StartupTogo</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-banner" data-aos>
+      <div class="cta-banner-text">
+        <h2>Votre projet sera le prochain !</h2>
+        <p>Discutons de vos besoins et créons quelque chose d'exceptionnel ensemble.</p>
+      </div>
+      <div class="cta-banner-actions">
+        <a href="contact.html" class="btn btn-white"><i class="fas fa-file-invoice"></i> Démarrer un projet</a>
+        <a href="https://wa.me/90146415" target="_blank" class="btn btn-ghost"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+        </div>
+        <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+      </a><p>Votre partenaire IT de confiance à Lomé, Togo.</p><div class="footer-socials"><a href="https://wa.me/90146415" class="footer-social" target="_blank"><i class="fab fa-whatsapp"></i></a><a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a><a href="#" class="footer-social"><i class="fab fa-linkedin-in"></i></a></div></div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="service.html"><i class="fas fa-chevron-right"></i> Maintenance IT</a></li><li><a href="service.html"><i class="fas fa-chevron-right"></i> Réseaux</a></li><li><a href="service.html"><i class="fas fa-chevron-right"></i> Développement</a></li><li><a href="service.html"><i class="fas fa-chevron-right"></i> Vidéosurveillance</a></li></ul></div>
+      <div class="footer-col"><h4>Entreprise</h4><ul><li><a href="propos.html"><i class="fas fa-chevron-right"></i> À propos</a></li><li><a href="boutique.html"><i class="fas fa-chevron-right"></i> Réalisations</a></li><li><a href="formation.html"><i class="fas fa-chevron-right"></i> Formations</a></li><li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul><li><a href="https://wa.me/90146415"><i class="fab fa-whatsapp"></i> +228 90 14 64 15</a></li><li><a href="mailto:contact@blueitech.tg"><i class="fas fa-envelope"></i> contact@blueitech.tg</a></li><li><a href="#"><i class="fas fa-map-marker-alt"></i> Lomé, Togo</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 <span>BLUE iTECH</span>. Tous droits réservés.</p><p>Conçu avec ❤️ à <span>Lomé, Togo</span></p></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/90146415" target="_blank" class="wa-float"><svg viewBox="0 0 1024 1024"><defs><linearGradient id="waG" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#61fd7d"/><stop offset="1" stop-color="#2bb826"/></linearGradient></defs><circle cx="512" cy="512" r="500" fill="url(#waG)"/><path fill="#fff" d="M783.302 243.246c-69.329-69.387-161.529-107.619-259.763-107.658-202.402 0-367.133 164.668-367.214 367.072-.026 64.699 16.883 127.854 49.017 183.522l-52.096 190.229 194.665-51.047c53.636 29.244 114.022 44.656 175.482 44.682h.151c202.382 0 367.128-164.688 367.21-367.094.039-98.087-38.121-190.319-107.452-259.706zM523.544 808.047h-.125c-54.767-.021-108.483-14.729-155.344-42.529l-11.146-6.612-115.517 30.293 30.834-112.592-7.259-11.544c-30.552-48.579-46.688-104.729-46.664-162.379.066-168.229 136.985-305.096 305.339-305.096 81.521.031 158.154 31.811 215.779 89.482s89.342 134.332 89.312 215.859c-.066 168.243-136.984 305.118-305.209 305.118zm167.415-228.515c-9.177-4.591-54.286-26.782-62.697-29.843-8.41-3.062-14.526-4.592-20.645 4.592-6.115 9.182-23.699 29.843-29.053 35.964-5.352 6.122-10.704 6.888-19.879 2.296-9.176-4.591-38.74-14.277-73.786-45.526-27.275-24.319-45.691-54.359-51.043-63.543-5.352-9.183-.569-14.146 4.024-18.72 4.127-4.109 9.175-10.713 13.763-16.069 4.587-5.355 6.117-9.183 9.175-15.304 3.059-6.122 1.529-11.479-.765-16.07-2.293-4.591-20.644-49.739-28.29-68.104-7.447-17.886-15.013-15.466-20.645-15.747-5.346-.266-11.469-.322-17.585-.322s-16.057 2.295-24.467 11.478-32.113 31.374-32.113 76.521c0 45.147 32.877 88.764 37.465 94.885 4.588 6.122 64.699 98.771 156.741 138.502 21.892 9.45 38.982 15.094 52.308 19.322 21.98 6.979 41.982 5.995 57.793 3.634 17.628-2.633 54.284-22.189 61.932-43.615 7.646-21.427 7.646-39.791 5.352-43.617-2.294-3.826-8.41-6.122-17.585-10.714z"/></svg></a>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);});
+document.getElementById('navToggle').addEventListener('click',()=>{document.getElementById('navMobile').classList.toggle('open');});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('aos-animate');});},{threshold:0.1});
+document.querySelectorAll('[data-aos]').forEach(el=>obs.observe(el));
+function filterProjects(btn, cat){
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.portfolio-card').forEach(card=>{
+    if(cat==='all'||card.dataset.cat===cat){card.style.display='';card.style.animation='fadeUp .4s ease both';}
+    else{card.style.display='none';}
+  });
+}
+</script>
+</body>
+</html>

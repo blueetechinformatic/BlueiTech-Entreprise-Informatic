@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="À propos de BLUE iTECH — Mission, vision, valeurs et équipe technique. Entreprise IT à Lomé, Togo.">
+  <title>À propos — BLUE iTECH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="_shared.css">
+  <style>
+    /* Mission / Vision / Valeurs */
+    .mvv-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .mvv-card {
+      border-radius:var(--radius-lg); padding:36px 28px;
+      position:relative; overflow:hidden;
+      border:1px solid var(--border);
+      transition:transform .22s, box-shadow .22s;
+    }
+    .mvv-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-md); }
+    .mvv-card-1 { background:linear-gradient(135deg,#001E80,#0057FF); }
+    .mvv-card-2 { background:var(--white); }
+    .mvv-card-3 { background:linear-gradient(135deg,#0A2080,#0040C0); }
+    .mvv-icon { font-size:36px; margin-bottom:18px; }
+    .mvv-card h3 { font-size:20px; margin-bottom:12px; }
+    .mvv-card-1 h3, .mvv-card-3 h3 { color:#fff; }
+    .mvv-card-2 h3 { color:var(--text); }
+    .mvv-card p { font-size:14px; line-height:1.8; }
+    .mvv-card-1 p, .mvv-card-3 p { color:rgba(255,255,255,0.75); }
+    .mvv-card-2 p { color:var(--text-muted); }
+    .mvv-card::after {
+      content:''; position:absolute; bottom:-30px; right:-30px;
+      width:120px; height:120px; border-radius:50%;
+      background:rgba(255,255,255,0.05); pointer-events:none;
+    }
+
+    /* Timeline histoire */
+    .timeline { position:relative; padding-left:40px; }
+    .timeline::before {
+      content:''; position:absolute; left:14px; top:8px; bottom:8px;
+      width:2px; background:linear-gradient(to bottom, var(--blue), var(--accent));
+      border-radius:2px;
+    }
+    .timeline-item { position:relative; padding-bottom:40px; }
+    .timeline-item:last-child { padding-bottom:0; }
+    .timeline-dot {
+      position:absolute; left:-32px; top:4px;
+      width:16px; height:16px; border-radius:50%;
+      background:linear-gradient(135deg,var(--blue),var(--accent));
+      border:3px solid #fff; box-shadow:0 0 0 3px rgba(0,87,255,0.2);
+    }
+    .timeline-year {
+      font-family:'Sora',sans-serif; font-size:11px; font-weight:700;
+      letter-spacing:1.5px; text-transform:uppercase; color:var(--blue);
+      margin-bottom:6px;
+    }
+    .timeline-title { font-family:'Sora',sans-serif; font-size:17px; font-weight:700; color:var(--text); margin-bottom:6px; }
+    .timeline-desc { font-size:14px; color:var(--text-muted); line-height:1.7; }
+
+    /* Team */
+    .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .team-card {
+      background:var(--white); border:1px solid var(--border);
+      border-radius:var(--radius-lg); overflow:hidden;
+      transition:transform .22s, box-shadow .22s;
+      text-align:center;
+    }
+    .team-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); }
+    .team-card-header {
+      padding:36px 24px 24px;
+      background:linear-gradient(135deg,var(--blue-deep),var(--blue));
+      position:relative;
+    }
+    .team-card-header::after {
+      content:''; position:absolute; bottom:-1px; left:0; right:0; height:24px;
+      background:var(--white); border-radius:50% 50% 0 0;
+    }
+    .team-avatar {
+      width:80px; height:80px; border-radius:50%;
+      background:linear-gradient(135deg,rgba(255,255,255,0.2),rgba(255,255,255,0.05));
+      border:3px solid rgba(255,255,255,0.3);
+      display:flex; align-items:center; justify-content:center;
+      font-size:32px; margin:0 auto 14px; position:relative; z-index:1;
+    }
+    .team-name { font-family:'Sora',sans-serif; font-size:17px; font-weight:800; color:#fff; position:relative; z-index:1; }
+    .team-card-body { padding:16px 24px 28px; }
+    .team-role {
+      font-family:'Sora',sans-serif; font-size:12px; font-weight:700;
+      letter-spacing:1px; text-transform:uppercase; color:var(--blue);
+      margin-bottom:10px; display:block;
+    }
+    .team-desc { font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:16px; }
+    .team-skills { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+    .team-skill {
+      background:var(--blue-pale); border-radius:50px;
+      padding:3px 12px; font-size:11px; font-weight:600; color:var(--blue);
+    }
+    .team-socials { display:flex; gap:8px; justify-content:center; margin-top:14px; }
+    .team-social {
+      width:32px; height:32px; border-radius:8px;
+      background:var(--off-white); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--text-muted); font-size:13px; transition:background .2s, color .2s;
+    }
+    .team-social:hover { background:var(--blue); color:#fff; }
+
+    /* Valeurs grid */
+    .values-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+    .value-item {
+      display:flex; gap:16px; align-items:flex-start;
+      background:var(--white); border:1px solid var(--border);
+      border-radius:var(--radius); padding:22px;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .value-item:hover { border-color:rgba(0,87,255,0.3); box-shadow:var(--shadow-sm); }
+    .value-icon {
+      width:48px; height:48px; border-radius:14px; flex-shrink:0;
+      background:linear-gradient(135deg,var(--blue-pale),rgba(0,87,255,0.06));
+      display:flex; align-items:center; justify-content:center;
+      font-size:22px; color:var(--blue);
+      transition:background .25s;
+    }
+    .value-item:hover .value-icon { background:linear-gradient(135deg,var(--blue),var(--blue-dark)); color:#fff; }
+    .value-item h4 { font-size:15px; margin-bottom:6px; }
+    .value-item p { font-size:13px; color:var(--text-muted); line-height:1.7; }
+
+    @media(max-width:992px){
+      .mvv-grid, .team-grid { grid-template-columns:1fr; }
+      .values-grid { grid-template-columns:1fr; }
+    }
+    @media(max-width:768px){
+      .values-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+      </div>
+      <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li><li><a href="service.html">Services</a></li>
+      <li><a href="boutique.html">Réalisations</a></li><li><a href="shop.html">Boutique</a></li><li><a href="formation.html">Formation</a></li>
+      <li><a href="propos.html" class="active">À propos</a></li><li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta"><a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Devis gratuit</a></div>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html">Accueil</a><a href="service.html">Services</a>
+  <a href="boutique.html">Réalisations</a><a href="shop.html">Boutique</a><a href="formation.html">Formation</a>
+  <a href="propos.html">À propos</a><a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn-primary">Demander un devis</a>
+</div>
+
+<!-- HERO -->
+<section class="hero-bg page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="tag white" data-aos>Notre histoire</div>
+    <h1 data-aos data-aos-delay="100">À propos de <span style="color:var(--accent)">BLUE iTECH</span></h1>
+    <p data-aos data-aos-delay="200">Nous sommes une équipe passionnée de technologie, déterminée à accompagner votre transformation numérique avec expertise et intégrité.</p>
+  </div>
+</section>
+
+<!-- PRÉSENTATION -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;" data-aos>
+      <div>
+        <div class="tag">Qui sommes-nous ?</div>
+        <h2 class="section-title">BLUE <span class="hl">iTECH</span>, votre partenaire numérique</h2>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.85;margin-bottom:16px;">
+          BLUE iTECH est une entreprise togolaise spécialisée dans les solutions informatiques et numériques, fondée avec la conviction que la technologie doit être un levier de croissance accessible à tous.
+        </p>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.85;margin-bottom:28px;">
+          Depuis notre création, nous avons accompagné plus de 150 clients — entreprises, commerces, institutions et particuliers — dans leur transformation numérique grâce à des solutions fiables, innovantes et sécurisées.
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="background:var(--blue-pale);border-radius:var(--radius);padding:20px;text-align:center;">
+            <div style="font-family:'Sora',sans-serif;font-size:2rem;font-weight:900;color:var(--blue);">+5</div>
+            <div style="font-size:13px;color:var(--text-muted);">Années d'expérience</div>
+          </div>
+          <div style="background:var(--blue-pale);border-radius:var(--radius);padding:20px;text-align:center;">
+            <div style="font-family:'Sora',sans-serif;font-size:2rem;font-weight:900;color:var(--blue);">+150</div>
+            <div style="font-size:13px;color:var(--text-muted);">Clients satisfaits</div>
+          </div>
+          <div style="background:var(--blue-pale);border-radius:var(--radius);padding:20px;text-align:center;">
+            <div style="font-family:'Sora',sans-serif;font-size:2rem;font-weight:900;color:var(--blue);">7</div>
+            <div style="font-size:13px;color:var(--text-muted);">Domaines d'expertise</div>
+          </div>
+          <div style="background:var(--blue-pale);border-radius:var(--radius);padding:20px;text-align:center;">
+            <div style="font-family:'Sora',sans-serif;font-size:2rem;font-weight:900;color:var(--blue);">24/7</div>
+            <div style="font-size:13px;color:var(--text-muted);">Support technique</div>
+          </div>
+        </div>
+      </div>
+      <div style="border-radius:var(--radius-lg);aspect-ratio:4/3;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;">
+        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80&auto=format&fit=crop" alt="Équipe BLUE iTECH" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,87,255,0.35),transparent);"></div>
+        <div style="position:absolute;bottom:20px;left:20px;background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:12px 18px;color:#fff;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;">
+          ⚡ BLUE iTECH — Lomé, Togo
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION / VISION / VALEURS -->
+<section class="section" style="background:var(--off-white);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="tag" data-aos>Notre ADN</div>
+      <h2 class="section-title" data-aos data-aos-delay="100">Mission, Vision & <span class="hl">Valeurs</span></h2>
+    </div>
+    <div class="mvv-grid">
+      <div class="mvv-card mvv-card-1" data-aos>
+        <div class="mvv-icon">🎯</div>
+        <h3>Notre Mission</h3>
+        <p>Accompagner les entreprises, commerces et particuliers dans leur transformation numérique grâce à des solutions IT fiables, innovantes et adaptées à leurs besoins spécifiques.</p>
+      </div>
+      <div class="mvv-card mvv-card-2" data-aos data-aos-delay="150">
+        <div class="mvv-icon">🔭</div>
+        <h3>Notre Vision</h3>
+        <p style="color:var(--text-muted);">Devenir la référence en solutions IT en Afrique de l'Ouest, en démocratisant l'accès aux technologies numériques pour toutes les organisations, quelle que soit leur taille.</p>
+      </div>
+      <div class="mvv-card mvv-card-3" data-aos data-aos-delay="300">
+        <div class="mvv-icon">💡</div>
+        <h3>Nos Engagements</h3>
+        <p>Excellence technique, intégrité professionnelle, innovation continue et satisfaction client. Nous livrons ce que nous promettons, dans les délais et le budget convenus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALEURS -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;">
+      <div data-aos>
+        <div class="tag">Nos valeurs</div>
+        <h2 class="section-title">Ce qui nous <span class="hl">guide</span> chaque jour</h2>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.8;">Nos valeurs ne sont pas de simples mots sur une page — elles définissent la manière dont nous travaillons, dont nous interagissons avec nos clients et dont nous prenons chaque décision.</p>
+      </div>
+      <div class="values-grid" data-aos data-aos-delay="150">
+        <div class="value-item">
+          <div class="value-icon"><i class="fas fa-star"></i></div>
+          <div><h4>Excellence</h4><p>Nous visons l'excellence dans chaque intervention, chaque ligne de code et chaque câble posé.</p></div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon"><i class="fas fa-handshake"></i></div>
+          <div><h4>Intégrité</h4><p>Transparence totale sur les délais, les coûts et les défis. Nous disons ce que nous faisons, et nous faisons ce que nous disons.</p></div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon"><i class="fas fa-lightbulb"></i></div>
+          <div><h4>Innovation</h4><p>Veille technologique constante pour vous proposer toujours les meilleures solutions du marché.</p></div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon"><i class="fas fa-users"></i></div>
+          <div><h4>Proximité</h4><p>Nous sommes plus qu'un prestataire — un partenaire de long terme, disponible et à l'écoute.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTOIRE -->
+<section class="section" style="background:var(--off-white);">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;">
+      <div data-aos>
+        <div class="tag">Notre parcours</div>
+        <h2 class="section-title">Notre <span class="hl">histoire</span></h2>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.8;margin-bottom:24px;">De l'atelier de réparation aux solutions cloud, notre trajectoire reflète notre passion pour la technologie et notre détermination à grandir avec nos clients.</p>
+        <a href="contact.html" class="btn btn-primary">Rejoindre l'aventure</a>
+      </div>
+      <div class="timeline" data-aos data-aos-delay="150">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2019</div>
+          <div class="timeline-title">Création de BLUE iTECH</div>
+          <div class="timeline-desc">Fondation de l'entreprise à Lomé avec une équipe de 3 techniciens spécialisés en maintenance informatique.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2020</div>
+          <div class="timeline-title">Expansion vers les réseaux</div>
+          <div class="timeline-desc">Développement de l'offre réseau et infrastructure. Déploiement de nos premiers hotspots Wi-Fi managés à Lomé.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2021</div>
+          <div class="timeline-title">Lancement du pôle développement</div>
+          <div class="timeline-desc">Création de l'équipe de développement logiciel. Livraison de nos premières applications web et mobiles.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2023</div>
+          <div class="timeline-title">+100 clients et cybersécurité</div>
+          <div class="timeline-desc">Franchissement du cap des 100 clients fidèles. Lancement de l'offre cybersécurité et cloud.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2025</div>
+          <div class="timeline-title">Leader IT à Lomé</div>
+          <div class="timeline-desc">Plus de 150 clients, 7 domaines d'expertise et une équipe en pleine croissance au service de votre succès.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÉQUIPE -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="tag" data-aos>L'équipe</div>
+      <h2 class="section-title" data-aos data-aos-delay="100">Des experts <span class="hl">passionnés</span></h2>
+      <p class="section-sub" data-aos data-aos-delay="200" style="margin:0 auto;">Notre force, c'est notre équipe — des techniciens certifiés, curieux et engagés.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card" data-aos>
+        <div class="team-card-header">
+          <div class="team-avatar">👨‍💼</div>
+          <div class="team-name">Koffi Amétépé</div>
+        </div>
+        <div class="team-card-body">
+          <span class="team-role">Fondateur & CEO</span>
+          <p class="team-desc">Ingénieur réseau certifié avec plus de 8 ans d'expérience en infrastructures IT et solutions d'entreprise.</p>
+          <div class="team-skills"><span class="team-skill">MikroTik</span><span class="team-skill">Cisco</span><span class="team-skill">Management</span></div>
+          <div class="team-socials">
+            <a href="#" class="team-social"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/90146415" class="team-social"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card" data-aos data-aos-delay="150">
+        <div class="team-card-header">
+          <div class="team-avatar">👨‍💻</div>
+          <div class="team-name">Mensah Agbéko</div>
+        </div>
+        <div class="team-card-body">
+          <span class="team-role">Lead Développeur</span>
+          <p class="team-desc">Développeur full-stack passionné, spécialisé dans les applications web et mobiles performantes et scalables.</p>
+          <div class="team-skills"><span class="team-skill">React</span><span class="team-skill">Node.js</span><span class="team-skill">Flutter</span></div>
+          <div class="team-socials">
+            <a href="#" class="team-social"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="team-social"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card" data-aos data-aos-delay="300">
+        <div class="team-card-header">
+          <div class="team-avatar">👨‍🔧</div>
+          <div class="team-name">Yawo Sossou</div>
+        </div>
+        <div class="team-card-body">
+          <span class="team-role">Technicien Réseau Senior</span>
+          <p class="team-desc">Expert en infrastructure réseau et vidéosurveillance, avec une maîtrise des équipements Ubiquiti et Hikvision.</p>
+          <div class="team-skills"><span class="team-skill">Ubiquiti</span><span class="team-skill">CCTV</span><span class="team-skill">VPN</span></div>
+          <div class="team-socials">
+            <a href="#" class="team-social"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/90146415" class="team-social"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-banner" data-aos>
+      <div class="cta-banner-text">
+        <h2>Travaillons ensemble !</h2>
+        <p>Rejoignez les +150 clients qui nous font confiance pour leurs projets IT.</p>
+      </div>
+      <div class="cta-banner-actions">
+        <a href="contact.html" class="btn btn-white"><i class="fas fa-file-invoice"></i> Démarrer un projet</a>
+        <a href="https://wa.me/90146415" target="_blank" class="btn btn-ghost"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+        </div>
+        <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+      </a><p>Votre partenaire IT de confiance à Lomé, Togo.</p><div class="footer-socials"><a href="https://wa.me/90146415" class="footer-social" target="_blank"><i class="fab fa-whatsapp"></i></a><a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a><a href="#" class="footer-social"><i class="fab fa-linkedin-in"></i></a></div></div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="service.html"><i class="fas fa-chevron-right"></i> Maintenance IT</a></li><li><a href="service.html"><i class="fas fa-chevron-right"></i> Réseaux</a></li><li><a href="service.html"><i class="fas fa-chevron-right"></i> Développement</a></li><li><a href="service.html"><i class="fas fa-chevron-right"></i> Vidéosurveillance</a></li></ul></div>
+      <div class="footer-col"><h4>Entreprise</h4><ul><li><a href="propos.html"><i class="fas fa-chevron-right"></i> À propos</a></li><li><a href="boutique.html"><i class="fas fa-chevron-right"></i> Réalisations</a></li><li><a href="formation.html"><i class="fas fa-chevron-right"></i> Formations</a></li><li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul><li><a href="https://wa.me/90146415"><i class="fab fa-whatsapp"></i> +228 90 14 64 15</a></li><li><a href="mailto:contact@blueitech.tg"><i class="fas fa-envelope"></i> contact@blueitech.tg</a></li><li><a href="#"><i class="fas fa-map-marker-alt"></i> Lomé, Togo</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 <span>BLUE iTECH</span>. Tous droits réservés.</p><p>Conçu avec ❤️ à <span>Lomé, Togo</span></p></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/90146415" target="_blank" class="wa-float"><svg viewBox="0 0 1024 1024"><defs><linearGradient id="waG" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#61fd7d"/><stop offset="1" stop-color="#2bb826"/></linearGradient></defs><circle cx="512" cy="512" r="500" fill="url(#waG)"/><path fill="#fff" d="M783.302 243.246c-69.329-69.387-161.529-107.619-259.763-107.658-202.402 0-367.133 164.668-367.214 367.072-.026 64.699 16.883 127.854 49.017 183.522l-52.096 190.229 194.665-51.047c53.636 29.244 114.022 44.656 175.482 44.682h.151c202.382 0 367.128-164.688 367.21-367.094.039-98.087-38.121-190.319-107.452-259.706zM523.544 808.047h-.125c-54.767-.021-108.483-14.729-155.344-42.529l-11.146-6.612-115.517 30.293 30.834-112.592-7.259-11.544c-30.552-48.579-46.688-104.729-46.664-162.379.066-168.229 136.985-305.096 305.339-305.096 81.521.031 158.154 31.811 215.779 89.482s89.342 134.332 89.312 215.859c-.066 168.243-136.984 305.118-305.209 305.118zm167.415-228.515c-9.177-4.591-54.286-26.782-62.697-29.843-8.41-3.062-14.526-4.592-20.645 4.592-6.115 9.182-23.699 29.843-29.053 35.964-5.352 6.122-10.704 6.888-19.879 2.296-9.176-4.591-38.74-14.277-73.786-45.526-27.275-24.319-45.691-54.359-51.043-63.543-5.352-9.183-.569-14.146 4.024-18.72 4.127-4.109 9.175-10.713 13.763-16.069 4.587-5.355 6.117-9.183 9.175-15.304 3.059-6.122 1.529-11.479-.765-16.07-2.293-4.591-20.644-49.739-28.29-68.104-7.447-17.886-15.013-15.466-20.645-15.747-5.346-.266-11.469-.322-17.585-.322s-16.057 2.295-24.467 11.478-32.113 31.374-32.113 76.521c0 45.147 32.877 88.764 37.465 94.885 4.588 6.122 64.699 98.771 156.741 138.502 21.892 9.45 38.982 15.094 52.308 19.322 21.98 6.979 41.982 5.995 57.793 3.634 17.628-2.633 54.284-22.189 61.932-43.615 7.646-21.427 7.646-39.791 5.352-43.617-2.294-3.826-8.41-6.122-17.585-10.714z"/></svg></a>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);});
+document.getElementById('navToggle').addEventListener('click',()=>{document.getElementById('navMobile').classList.toggle('open');});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('aos-animate');});},{threshold:0.1});
+document.querySelectorAll('[data-aos]').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

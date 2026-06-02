@@ -1,720 +1,561 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-        <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Document title -->
-    <title>Blue-etech TIC</title>
-    <!-- Stylesheets & Fonts -->
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i%7CRajdhani:400,600,700"
-        rel="stylesheet">
-         <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-  crossorigin="anonymous">
-  
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap"> -->
-    <!-- Plugins Stylesheets -->
-    <link rel="stylesheet" href="assets/css/loader/loaders.css">
-    <link rel="stylesheet" href="assets/css/font-awesome/font-awesome.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/aos/aos.css">
-    <link rel="stylesheet" href="assets/css/swiper/swiper.css">
-    <link rel="stylesheet" href="assets/css/lightgallery.min.css">
-    <!-- Template Stylesheet -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <!-- Responsive Stylesheet -->
-    <link rel="stylesheet" href="assets/css/responsive.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BLUE iTECH — Solutions IT complètes : maintenance informatique, réseaux, développement logiciel, cybersécurité à Lomé, Togo.">
+  <title>BLUE iTECH — Solutions IT Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="_shared.css">
+  <style>
+    /* ── Hero spécifique ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      position: relative;
+    }
+    .hero-content {
+      flex: 1; display: flex; align-items: center;
+      padding: calc(var(--nav-h) + 60px) 0 60px;
+      position: relative; z-index: 1;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(0,198,255,0.10); border: 1px solid rgba(0,198,255,0.25);
+      border-radius: 50px; padding: 6px 16px; margin-bottom: 22px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); animation: pulse 1.8s infinite;
+    }
+    .hero h1 {
+      color: #fff; margin-bottom: 22px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .hero h1 .hl { color: var(--accent); }
+    .hero-sub {
+      font-size: 17px; color: rgba(255,255,255,0.7);
+      line-height: 1.8; margin-bottom: 36px;
+      max-width: 520px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Hero visual — vraie photo */
+    .hero-visual {
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .hero-visual-img {
+      width: 100%; max-width: 520px; aspect-ratio: 4/3;
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(0,198,255,0.2), 0 30px 80px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .hero-visual-img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: brightness(.9) saturate(1.1);
+    }
+    .hero-visual-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,87,255,0.25) 0%, transparent 60%);
+    }
+
+    /* Floating badges */
+    .hero-badge {
+      position: absolute; background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 12px; padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700; color: #fff;
+      z-index: 2;
+    }
+    .hero-badge i { color: var(--accent); }
+    .hero-badge-1 { top: 10%; left: -20px; animation: float 4s 0s ease-in-out infinite; }
+    .hero-badge-2 { bottom: 18%; right: -20px; animation: float 4.5s .5s ease-in-out infinite; }
+    .hero-badge-3 { top: 60%; left: -40px; animation: float 5s 1s ease-in-out infinite; }
+
+    /* ── Features strip ── */
+    .features-strip {
+      background: var(--off-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .features-strip-inner {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 0;
+    }
+    .feature-item {
+      padding: 28px 24px; display: flex; align-items: center; gap: 14px;
+      border-right: 1px solid var(--border);
+      transition: background .2s;
+    }
+    .feature-item:last-child { border-right: none; }
+    .feature-item:hover { background: var(--white); }
+    .feature-icon { font-size: 22px; color: var(--blue); flex-shrink: 0; }
+    .feature-text strong {
+      display: block; font-family: 'Sora', sans-serif;
+      font-size: 13px; font-weight: 700; color: var(--text);
+    }
+    .feature-text span { font-size: 12px; color: var(--text-muted); }
+
+    /* ── About strip ── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 72px; align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-img-wrap {
+      border-radius: var(--radius-lg); overflow: hidden;
+      background: linear-gradient(135deg,var(--blue-deep),var(--blue));
+      aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+      font-size: 100px; box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .about-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,87,255,0.4), transparent);
+    }
+    .about-badge {
+      position: absolute; bottom: -20px; right: -20px;
+      background: #fff; border-radius: var(--radius);
+      padding: 20px 24px; box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+    .about-badge-num {
+      font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 900;
+      color: var(--blue); line-height: 1;
+    }
+    .about-badge-label { font-size: 12px; color: var(--text-muted); }
+    .about-checks { display: flex; flex-direction: column; gap: 12px; margin: 24px 0 32px; }
+    .about-check {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 14px; color: var(--text);
+    }
+    .about-check i { color: var(--blue); margin-top: 2px; flex-shrink: 0; }
+
+    /* ── CTA banner ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 60%, #00264D 100%);
+      border-radius: var(--radius-lg);
+      padding: 60px 48px;
+      display: flex; align-items: center; justify-content: space-between; gap: 32px;
+      flex-wrap: wrap;
+      position: relative; overflow: hidden;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(0,198,255,0.12) 0%, transparent 60%),
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: auto, 40px 40px, 40px 40px;
+    }
+    .cta-banner-text { position: relative; z-index: 1; }
+    .cta-banner-text h2 { color: #fff; font-size: 2rem; margin-bottom: 8px; }
+    .cta-banner-text p { color: rgba(255,255,255,0.7); font-size: 16px; }
+    .cta-banner-actions { display: flex; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1; }
+
+    /* ── Testimonials ── */
+    .section-dark { background: var(--off-white); }
+
+    /* responsive */
+    @media(max-width:992px){
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-sub { max-width: 100%; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .features-strip-inner { grid-template-columns: 1fr 1fr; }
+      .feature-item:nth-child(2) { border-right: none; }
+      .feature-item:nth-child(3) { border-top: 1px solid var(--border); }
+      .feature-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+      .cta-banner { text-align: center; justify-content: center; }
+    }
+    @media(max-width:600px){
+      .features-strip-inner { grid-template-columns: 1fr; }
+      .feature-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .cta-banner { padding: 36px 24px; }
+    }
+  </style>
 </head>
-
 <body>
-    <!-- Loader Start -->
-    <div class="css-loader">
-        <div class="loader-inner line-scale d-flex align-items-center justify-content-center"></div>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+      </div>
+      <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="service.html">Services</a></li>
+      <li><a href="boutique.html">Réalisations</a></li>
+      <li><a href="shop.html">Boutique</a></li>
+      <li><a href="formation.html">Formation</a></li>
+      <li><a href="propos.html">À propos</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Devis gratuit</a>
     </div>
-    <!-- Loader End -->
-    <!-- Header Start -->
-    <header class="position-absolute w-100">
+    <div class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html">Accueil</a>
+  <a href="service.html">Services</a>
+  <a href="boutique.html">Réalisations</a>
+  <a href="shop.html">Boutique</a>
+  <a href="formation.html">Formation</a>
+  <a href="propos.html">À propos</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn-primary">Demander un devis</a>
+</div>
 
-  <!-- Floating logo whatsapp -->
-  <a href="https://wa.me/90146415" target="_blank">
-
-    <!-- <video loop="" muted="" autoplay="" playsinline="" poster="https://cdn.cloudflare.steamstatic.com/steam/clusters/frontpage/53d62cce754388a033e141be/page_bg_mobile_french.jpg?t=1677616037" class="fullscreen-bg__video_mobile" data-dm-button-id="download-master-button-172869831">
-        <source src="https://cdn.cloudflare.steamstatic.com/steam/clusters/frontpage/53d62cce754388a033e141be/webm_page_bg_mobile_french.webm?t=1677616037" type="video/webm">
-                                    <source src="https://cdn.cloudflare.steamstatic.com/steam/clusters/frontpage/53d62cce754388a033e141be/mp4_page_bg_mobile_french.mp4?t=1677616037" type="video/mp4">
-                            </video> -->
-    <div>
-        <div title="Ecrivez nous via Whatsapp"
-            class="ht-ctc ht-ctc-chat ctc-analytics ctc_wp_desktop style-2 ht_ctc_animation no-animations"
-            id="ht-ctc-chat"
-            style="position: fixed; bottom: 35px; right: 12px; cursor: pointer; z-index: 99999999;">
-            <div class="ht_ctc_style ht_ctc_chat_style">
-                <div style="display: flex; justify-content: center; align-items: center;  "
-                    class="ctc-analytics">
-                    <!-- <p class=" " data-hover="Bonjour"
-                    style="padding: 0px 16px; line-height: 1.6; font-size: 15px; background-color: rgb(37, 211, 102); color: rgb(255, 255, 255); border-radius: 10px; margin: 0px 10px; order: 0; display: none;">
-                    Ecrivez nous via WhatsApp.</p> -->
-                    <svg style="pointer-events:none; display:block; height:50px; width:50px;"
-                        width="50px" height="50px" viewBox="0 0 1024 1024">
-                        <defs>
-                            <path id="htwasqicona-chat"
-                                d="M1023.941 765.153c0 5.606-.171 17.766-.508 27.159-.824 22.982-2.646 52.639-5.401 66.151-4.141 20.306-10.392 39.472-18.542 55.425-9.643 18.871-21.943 35.775-36.559 50.364-14.584 14.56-31.472 26.812-50.315 36.416-16.036 8.172-35.322 14.426-55.744 18.549-13.378 2.701-42.812 4.488-65.648 5.3-9.402.336-21.564.505-27.15.505l-504.226-.081c-5.607 0-17.765-.172-27.158-.509-22.983-.824-52.639-2.646-66.152-5.4-20.306-4.142-39.473-10.392-55.425-18.542-18.872-9.644-35.775-21.944-50.364-36.56-14.56-14.584-26.812-31.471-36.415-50.314-8.174-16.037-14.428-35.323-18.551-55.744-2.7-13.378-4.487-42.812-5.3-65.649-.334-9.401-.503-21.563-.503-27.148l.08-504.228c0-5.607.171-17.766.508-27.159.825-22.983 2.646-52.639 5.401-66.151 4.141-20.306 10.391-39.473 18.542-55.426C34.154 93.24 46.455 76.336 61.07 61.747c14.584-14.559 31.472-26.812 50.315-36.416 16.037-8.172 35.324-14.426 55.745-18.549 13.377-2.701 42.812-4.488 65.648-5.3 9.402-.335 21.565-.504 27.149-.504l504.227.081c5.608 0 17.766.171 27.159.508 22.983.825 52.638 2.646 66.152 5.401 20.305 4.141 39.472 10.391 55.425 18.542 18.871 9.643 35.774 21.944 50.363 36.559 14.559 14.584 26.812 31.471 36.415 50.315 8.174 16.037 14.428 35.323 18.551 55.744 2.7 13.378 4.486 42.812 5.3 65.649.335 9.402.504 21.564.504 27.15l-.082 504.226z">
-                            </path>
-                        </defs>
-                        <linearGradient id="htwasqiconb-chat" gradientUnits="userSpaceOnUse"
-                            x1="512.001" y1=".978" x2="512.001" y2="1025.023">
-                            <stop offset="0" stop-color="#61fd7d"></stop>
-                            <stop offset="1" stop-color="#2bb826"></stop>
-                        </linearGradient>
-                        <use xlink:href="#htwasqicona-chat" overflow="visible"
-                            style="fill: url(#htwasqiconb-chat)" fill="url(#htwasqiconb-chat)">
-                        </use>
-                        <g>
-                            <path style="fill: #FFFFFF;" fill="#FFF"
-                                d="M783.302 243.246c-69.329-69.387-161.529-107.619-259.763-107.658-202.402 0-367.133 164.668-367.214 367.072-.026 64.699 16.883 127.854 49.017 183.522l-52.096 190.229 194.665-51.047c53.636 29.244 114.022 44.656 175.482 44.682h.151c202.382 0 367.128-164.688 367.21-367.094.039-98.087-38.121-190.319-107.452-259.706zM523.544 808.047h-.125c-54.767-.021-108.483-14.729-155.344-42.529l-11.146-6.612-115.517 30.293 30.834-112.592-7.259-11.544c-30.552-48.579-46.688-104.729-46.664-162.379.066-168.229 136.985-305.096 305.339-305.096 81.521.031 158.154 31.811 215.779 89.482s89.342 134.332 89.312 215.859c-.066 168.243-136.984 305.118-305.209 305.118zm167.415-228.515c-9.177-4.591-54.286-26.782-62.697-29.843-8.41-3.062-14.526-4.592-20.645 4.592-6.115 9.182-23.699 29.843-29.053 35.964-5.352 6.122-10.704 6.888-19.879 2.296-9.176-4.591-38.74-14.277-73.786-45.526-27.275-24.319-45.691-54.359-51.043-63.543-5.352-9.183-.569-14.146 4.024-18.72 4.127-4.109 9.175-10.713 13.763-16.069 4.587-5.355 6.117-9.183 9.175-15.304 3.059-6.122 1.529-11.479-.765-16.07-2.293-4.591-20.644-49.739-28.29-68.104-7.447-17.886-15.013-15.466-20.645-15.747-5.346-.266-11.469-.322-17.585-.322s-16.057 2.295-24.467 11.478-32.113 31.374-32.113 76.521c0 45.147 32.877 88.764 37.465 94.885 4.588 6.122 64.699 98.771 156.741 138.502 21.892 9.45 38.982 15.094 52.308 19.322 21.98 6.979 41.982 5.995 57.793 3.634 17.628-2.633 54.284-22.189 61.932-43.615 7.646-21.427 7.646-39.791 5.352-43.617-2.294-3.826-8.41-6.122-17.585-10.714z">
-                            </path>
-                        </g>
-                    </svg>
-                </div>
-            </div>
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero hero-bg">
+  <div class="hero-content">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-left" style="animation:fadeUp .8s ease both;">
+          <div class="hero-eyebrow">Solutions IT Premium</div>
+          <h1>Des solutions IT <span class="hl">complètes</span>, adaptées à vos besoins</h1>
+          <p class="hero-sub">BLUE iTECH accompagne les entreprises, commerces et particuliers dans leur transformation numérique grâce à des solutions fiables, innovantes et sécurisées.</p>
+          <div class="hero-actions">
+            <a href="contact.html" class="btn btn-primary"><i class="fas fa-file-invoice"></i> Demander un devis</a>
+            <a href="contact.html" class="btn btn-ghost"><i class="fas fa-phone-alt"></i> Nous contacter</a>
+          </div>
         </div>
+        <div class="hero-visual" style="animation:fadeIn 1s .3s ease both;">
+          <div class="hero-visual-img">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80&auto=format&fit=crop" alt="Infrastructure réseau professionnelle">
+          </div>
+          <div class="hero-badge hero-badge-1"><i class="fas fa-shield-alt"></i> Cybersécurité</div>
+          <div class="hero-badge hero-badge-2"><i class="fas fa-wifi"></i> Réseaux Pro</div>
+          <div class="hero-badge hero-badge-3"><i class="fas fa-code"></i> Développement</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Stats bar -->
+  <div class="stats-bar" style="position:relative;z-index:1;">
+    <div class="stat-item" data-aos><div class="stat-num">+<span>150</span></div><div class="stat-label">Clients satisfaits</div></div>
+    <div class="stat-item" data-aos data-aos-delay="100"><div class="stat-num"><span>5</span>+</div><div class="stat-label">Années d'expérience</div></div>
+    <div class="stat-item" data-aos data-aos-delay="200"><div class="stat-num"><span>7</span></div><div class="stat-label">Domaines d'expertise</div></div>
+    <div class="stat-item" data-aos data-aos-delay="300"><div class="stat-num"><span>24</span>/7</div><div class="stat-label">Support technique</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════ FEATURES STRIP ═══════════════ -->
+<div class="features-strip">
+  <div class="container">
+    <div class="features-strip-inner">
+      <div class="feature-item" data-aos>
+        <i class="fas fa-bolt feature-icon"></i>
+        <div class="feature-text"><strong>Intervention rapide</strong><span>Sous 24h partout à Lomé</span></div>
+      </div>
+      <div class="feature-item" data-aos data-aos-delay="100">
+        <i class="fas fa-shield-check feature-icon"></i>
+        <div class="feature-text"><strong>Solutions sécurisées</strong><span>Standards professionnels</span></div>
+      </div>
+      <div class="feature-item" data-aos data-aos-delay="200">
+        <i class="fas fa-headset feature-icon"></i>
+        <div class="feature-text"><strong>Support 24/7</strong><span>Toujours disponibles</span></div>
+      </div>
+      <div class="feature-item" data-aos data-aos-delay="300">
+        <i class="fas fa-star feature-icon"></i>
+        <div class="feature-text"><strong>Qualité garantie</strong><span>100% satisfaction client</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div class="tag" data-aos>Nos expertises</div>
+      <h2 class="section-title" data-aos data-aos-delay="100">Ce que nous <span class="hl">faisons</span> pour vous</h2>
+      <p class="section-sub" data-aos data-aos-delay="200" style="margin:0 auto;">Des services IT complets couvrant tous vos besoins numériques, portés par une équipe d'experts passionnés.</p>
+    </div>
+    <div class="card-grid-3">
+      <div class="card-service" data-aos>
+        <div class="card-service-icon"><i class="fas fa-laptop-medical"></i></div>
+        <h3>Maintenance Informatique</h3>
+        <p>Diagnostic, réparation et entretien préventif de vos équipements informatiques pour garantir leur performance.</p>
+        <a href="service.html" class="card-service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="100">
+        <div class="card-service-icon"><i class="fas fa-network-wired"></i></div>
+        <h3>Réseaux & Infrastructures</h3>
+        <p>Installation, configuration et gestion de vos réseaux LAN/WAN, câblage structuré et équipements actifs.</p>
+        <a href="service.html" class="card-service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="200">
+        <div class="card-service-icon"><i class="fas fa-code"></i></div>
+        <h3>Développement Logiciel</h3>
+        <p>Création d'applications web, mobiles et de logiciels sur mesure adaptés à vos processus métier.</p>
+        <a href="service.html" class="card-service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="100">
+        <div class="card-service-icon"><i class="fas fa-camera"></i></div>
+        <h3>Vidéosurveillance</h3>
+        <p>Installation de systèmes CCTV professionnels pour sécuriser vos locaux, commerces et résidences.</p>
+        <a href="service.html" class="card-service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="200">
+        <div class="card-service-icon"><i class="fas fa-wifi"></i></div>
+        <h3>Solutions Wi-Fi Pro</h3>
+        <p>Déploiement de hotspots Wi-Fi managés, couverture optimale et portails captifs personnalisés.</p>
+        <a href="service.html" class="card-service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="300">
+        <div class="card-service-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>Cybersécurité</h3>
+        <p>Audit de sécurité, pare-feu, VPN et protection de vos données contre les menaces informatiques.</p>
+        <a href="service.html" class="card-service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;" data-aos>
+      <a href="service.html" class="btn btn-outline">Voir tous nos services <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual" data-aos>
+        <div class="about-img-wrap" style="font-size:0;">
+          <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80&auto=format&fit=crop" alt="Équipe BLUE iTECH" style="width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;">
+        </div>
+        <div class="about-badge">
+          <div class="about-badge-num">+5</div>
+          <div class="about-badge-label">Années<br>d'expérience</div>
+        </div>
+      </div>
+      <div data-aos data-aos-delay="150">
+        <div class="tag">À propos de nous</div>
+        <h2 class="section-title">Votre partenaire IT de <span class="hl">confiance</span> à Lomé</h2>
+        <p style="color:var(--text-muted);font-size:15px;line-height:1.8;margin-bottom:8px;">
+          BLUE iTECH est une entreprise togolaise spécialisée dans les solutions informatiques et numériques. Depuis notre création, nous accompagnons entreprises et particuliers vers l'excellence technologique.
+        </p>
+        <div class="about-checks">
+          <div class="about-check"><i class="fas fa-check-circle"></i> Expertise reconnue en maintenance et réseaux</div>
+          <div class="about-check"><i class="fas fa-check-circle"></i> Équipe certifiée et passionnée de technologies</div>
+          <div class="about-check"><i class="fas fa-check-circle"></i> Solutions sur mesure à prix compétitifs</div>
+          <div class="about-check"><i class="fas fa-check-circle"></i> Support réactif et suivi personnalisé</div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="propos.html" class="btn btn-primary">Découvrir l'équipe</a>
+          <a href="boutique.html" class="btn btn-outline">Nos réalisations</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ REALISATIONS ═══════════════ -->
+<section class="section section-dark">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="tag" data-aos>Portfolio</div>
+      <h2 class="section-title" data-aos data-aos-delay="100">Nos <span class="hl">réalisations</span></h2>
+      <p class="section-sub" data-aos data-aos-delay="200" style="margin:0 auto;">Des projets concrets qui témoignent de notre savoir-faire et de notre engagement envers l'excellence.</p>
+    </div>
+    <div class="card-grid-4">
+      <div class="card-service" data-aos style="padding:0;overflow:hidden;">
+        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&q=80&auto=format&fit=crop" alt="Réseaux d'entreprise" style="width:100%;height:140px;object-fit:cover;display:block;">
+        <div style="padding:18px 20px;">
+          <h3>Réseaux d'entreprise</h3>
+          <p style="font-size:13px;">Infrastructure complète pour PME et grandes entreprises.</p>
+        </div>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="100" style="padding:0;overflow:hidden;">
+        <img src="https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=400&q=80&auto=format&fit=crop" alt="Hotspots Wi-Fi" style="width:100%;height:140px;object-fit:cover;display:block;">
+        <div style="padding:18px 20px;">
+          <h3>Hotspots Wi-Fi</h3>
+          <p style="font-size:13px;">Déploiement de portails captifs personnalisés.</p>
+        </div>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="200" style="padding:0;overflow:hidden;">
+        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&q=80&auto=format&fit=crop" alt="Sites web développés" style="width:100%;height:140px;object-fit:cover;display:block;">
+        <div style="padding:18px 20px;">
+          <h3>Sites & Applications</h3>
+          <p style="font-size:13px;">Développement web et mobile sur mesure.</p>
+        </div>
+      </div>
+      <div class="card-service" data-aos data-aos-delay="300" style="padding:0;overflow:hidden;">
+        <img src="https://images.unsplash.com/photo-1557597774-9d475d030a96?w=400&q=80&auto=format&fit=crop" alt="Vidéosurveillance" style="width:100%;height:140px;object-fit:cover;display:block;">
+        <div style="padding:18px 20px;">
+          <h3>Vidéosurveillance</h3>
+          <p style="font-size:13px;">Installations CCTV pour commerces et résidences.</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;" data-aos>
+      <a href="boutique.html" class="btn btn-primary">Voir toutes nos réalisations <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="tag" data-aos>Témoignages</div>
+      <h2 class="section-title" data-aos data-aos-delay="100">Ce que disent nos <span class="hl">clients</span></h2>
+    </div>
+    <div class="card-grid-3">
+      <div class="testi-card" data-aos>
+        <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="testi-text">"BLUE iTECH a transformé notre infrastructure réseau. Intervention rapide, professionnelle et un résultat impeccable. Je recommande vivement !"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">KA</div>
+          <div><div class="testi-name">Kofi Amevor</div><div class="testi-role">Directeur, Entreprise KA SARL</div></div>
+        </div>
+      </div>
+      <div class="testi-card" data-aos data-aos-delay="100">
+        <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="testi-text">"Notre hotspot Wi-Fi fonctionne parfaitement depuis l'installation. Le portail captif est exactement ce dont nous avions besoin pour notre hôtel."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AM</div>
+          <div><div class="testi-name">Adjoa Mensah</div><div class="testi-role">Gérante, Hôtel Le Belvédère</div></div>
+        </div>
+      </div>
+      <div class="testi-card" data-aos data-aos-delay="200">
+        <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="testi-text">"Excellente équipe technique ! Ils ont développé notre application sur mesure dans les délais et le budget prévus. Un vrai professionnel."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">YD</div>
+          <div><div class="testi-name">Yao Dossou</div><div class="testi-role">Fondateur, StartupTogo</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA BANNER ═══════════════ -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-banner" data-aos>
+      <div class="cta-banner-text">
+        <h2>Prêt à démarrer votre projet ?</h2>
+        <p>Contactez-nous pour un devis gratuit et sans engagement.</p>
+      </div>
+      <div class="cta-banner-actions">
+        <a href="contact.html" class="btn btn-white"><i class="fas fa-file-invoice"></i> Demander un devis</a>
+        <a href="https://wa.me/90146415" target="_blank" class="btn btn-ghost"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-icon">
+            <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+          </div>
+          <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+        </a>
+        <p>Votre partenaire IT de confiance à Lomé, Togo. Solutions fiables, innovantes et sécurisées pour votre transformation numérique.</p>
+        <div class="footer-socials">
+          <a href="https://wa.me/90146415" class="footer-social" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="service.html"><i class="fas fa-chevron-right"></i> Maintenance IT</a></li>
+          <li><a href="service.html"><i class="fas fa-chevron-right"></i> Réseaux</a></li>
+          <li><a href="service.html"><i class="fas fa-chevron-right"></i> Développement</a></li>
+          <li><a href="service.html"><i class="fas fa-chevron-right"></i> Vidéosurveillance</a></li>
+          <li><a href="service.html"><i class="fas fa-chevron-right"></i> Wi-Fi Pro</a></li>
+          <li><a href="service.html"><i class="fas fa-chevron-right"></i> Cybersécurité</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Entreprise</h4>
+        <ul>
+          <li><a href="propos.html"><i class="fas fa-chevron-right"></i> À propos</a></li>
+          <li><a href="boutique.html"><i class="fas fa-chevron-right"></i> Réalisations</a></li>
+          <li><a href="formation.html"><i class="fas fa-chevron-right"></i> Formations</a></li>
+          <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/90146415"><i class="fab fa-whatsapp"></i> +228 90 14 64 15</a></li>
+          <li><a href="mailto:contact@blueitech.tg"><i class="fas fa-envelope"></i> contact@blueitech.tg</a></li>
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i> Lomé, Togo</a></li>
+          <li><a href="#"><i class="fas fa-clock"></i> Lun–Sam : 8h–18h</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span>BLUE iTECH</span>. Tous droits réservés.</p>
+      <p>Conçu avec ❤️ à <span>Lomé, Togo</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/90146415" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 1024 1024">
+    <defs>
+      <linearGradient id="waG" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#61fd7d"/><stop offset="1" stop-color="#2bb826"/>
+      </linearGradient>
+    </defs>
+    <circle cx="512" cy="512" r="500" fill="url(#waG)"/>
+    <path fill="#fff" d="M783.302 243.246c-69.329-69.387-161.529-107.619-259.763-107.658-202.402 0-367.133 164.668-367.214 367.072-.026 64.699 16.883 127.854 49.017 183.522l-52.096 190.229 194.665-51.047c53.636 29.244 114.022 44.656 175.482 44.682h.151c202.382 0 367.128-164.688 367.21-367.094.039-98.087-38.121-190.319-107.452-259.706zM523.544 808.047h-.125c-54.767-.021-108.483-14.729-155.344-42.529l-11.146-6.612-115.517 30.293 30.834-112.592-7.259-11.544c-30.552-48.579-46.688-104.729-46.664-162.379.066-168.229 136.985-305.096 305.339-305.096 81.521.031 158.154 31.811 215.779 89.482s89.342 134.332 89.312 215.859c-.066 168.243-136.984 305.118-305.209 305.118zm167.415-228.515c-9.177-4.591-54.286-26.782-62.697-29.843-8.41-3.062-14.526-4.592-20.645 4.592-6.115 9.182-23.699 29.843-29.053 35.964-5.352 6.122-10.704 6.888-19.879 2.296-9.176-4.591-38.74-14.277-73.786-45.526-27.275-24.319-45.691-54.359-51.043-63.543-5.352-9.183-.569-14.146 4.024-18.72 4.127-4.109 9.175-10.713 13.763-16.069 4.587-5.355 6.117-9.183 9.175-15.304 3.059-6.122 1.529-11.479-.765-16.07-2.293-4.591-20.644-49.739-28.29-68.104-7.447-17.886-15.013-15.466-20.645-15.747-5.346-.266-11.469-.322-17.585-.322s-16.057 2.295-24.467 11.478-32.113 31.374-32.113 76.521c0 45.147 32.877 88.764 37.465 94.885 4.588 6.122 64.699 98.771 156.741 138.502 21.892 9.45 38.982 15.094 52.308 19.322 21.98 6.979 41.982 5.995 57.793 3.634 17.628-2.633 54.284-22.189 61.932-43.615 7.646-21.427 7.646-39.791 5.352-43.617-2.294-3.826-8.41-6.122-17.585-10.714z"/>
+  </svg>
 </a>
 
-
-        <div class="container">
-            <div class="top-header d-none d-sm-flex justify-content-between align-items-center">
-                <div class="contact">
-                    <a href="tel:+22899915677" class="tel"><i class="fa fa-phone" aria-hidden="true"></i>+22899915677</a>
-                    <a href="mailto:info@yourmail.com"><i class="fa fa-envelope"
-                            aria-hidden="true"></i>ezeckiellossavihlontor@gmail.com</a>
-                </div>
-                <nav class="d-flex aic">
-                    <!-- <a href="#" class="login disabled"><i class="fa fa-user" aria-hidden="true"></i>Login</a> -->
-                    <ul class="nav social d-none d-md-flex">
-                        <li><a href="https://www.facebook.com/btechinformatic/" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="https://wa.me/90146415"><i class="fa fa-whatsapp"></i></a></li>
-                        <li><a href="https://t.me/+nbiHZBEU3vxiYTlk" target="_blank"><i class="fa fa-telegram"></i></a></li>
-                    </ul>
-                </nav>
-            </div>
-            <nav class="navbar navbar-expand-md navbar-light">
-                <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" alt="Multipurpose"></a>
-                <div class="group d-flex align-items-center">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation"><span
-                            class="navbar-toggler-icon"></span></button>
-                    <a class="login-icon d-sm-none" href="#"><i class="fa fa-user"></i></a>
-                    <a class="cart" href="#"><i class="fa fa-shopping-cart"></i></a>
-                </div>
-                <a class="search-icon d-none d-md-block" href="#"><i class="fa fa-search"></i></a>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#">Accuiel</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Pages/service.html">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Pages/boutique.html">Boutique</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Pages/propos.html">A propos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Pages/formation.html">Formation</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Pages/contact.html">Contactez-nous</a></li>
-                    </ul>
-                    <form class="bg-white search-form disabled" method="get" id="searchform">
-                        <div class="input-group">
-                            <input class="field form-control " id="s" name="s" type="text" placeholder="Search">
-                            <span class="input-group-btn">
-                                <input class="submit btn btn-primary" id="searchsubmit" name="submit" type="submit"
-                                    value="Search">
-                            </span>
-                        </div>
-                    </form>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <!-- Header End -->
-    <!-- Hero Start -->
-    <section class="hero">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 offset-md-1 col-md-11">
-                    <div class="swiper-container hero-slider">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide slide-content d-flex align-items-center">
-                                <div class="single-slide">
-                                    <h1 data-aos="fade-right" data-aos-delay="200">Bienvenue sur notre site<br>
-                                    </h1>
-                                    <p data-aos="fade-right" data-aos-delay="600">Nous sommes ravis de vous accueillir 
-                                        et espérons que vous y trouverez toutes les informations que vous recherchez. 
-                                        Nous vous souhaitons une excellente visite et espérons vous revoir très bientôt !
-                                    </p>
-                                    <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">En savoir 
-                                        Plus</a>
-                                    <!-- <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">Envoyer un message  <i class="fa fa-whatsapp"></i></a> -->
-                                </div>
-                            </div>
-                            <div class="swiper-slide slide-content d-flex align-items-center">
-                                <div class="single-slide">
-                                    <h1 data-aos="fade-right" data-aos-delay="200">Maintenance informatique<br> 
-                                    </h1>
-                                    <p data-aos="fade-right" data-aos-delay="600">Besoin de maintenir vos systèmes
-                                         informatiques en parfait état de fonctionnement ? Faites confiance à notre 
-                                         équipe de techniciens qualifiés pour vous offrir des services de maintenance 
-                                         préventive et corrective de qualité supérieure. Contactez-nous dès maintenant 
-                                         pour en savoir plus sur nos solutions de maintenance informatique personnalisées.
-                                    </p>
-                                    <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">En savoir 
-                                        Plus</a>
-                                    <!-- <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">Get
-                                        Now</a> -->
-                                </div>
-                            </div>
-                            <!--  -->
-                            <div class="swiper-slide slide-content d-flex align-items-center">
-                                <div class="single-slide">
-                                    <h1 data-aos="fade-right" data-aos-delay="200">Réseau informatique<br> 
-                                    </h1>
-                                    <p data-aos="fade-right" data-aos-delay="600">Vous cherchez à mettre en place un réseau 
-                                        informatique performant et sécurisé pour votre entreprise ? Contactez notre équipe 
-                                        d'experts en réseau informatique pour bénéficier de solutions personnalisées, d'une 
-                                        installation professionnelle et d'une maintenance de qualité supérieure. Faites confiance 
-                                        à notre expertise pour garantir une connectivité optimale et une protection contre les
-                                         menaces potentielles.
-                                    </p>
-                                    <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">En savoir 
-                                        Plus</a>
-                                    <!-- <a data-aos="fade-right" data-aos-delay="900" href="#" class="btn btn-primary">Get
-                                        Now</a> -->
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!-- Add Control -->
-            <span class="arr-left"><i class="fa fa-angle-left"></i></span>
-            <span class="arr-right"><i class="fa fa-angle-right"></i></span>
-        </div>
-        <div class="texture"></div>
-        <div class="diag-bg"></div>
-    </section>
-    <!-- Hero End -->
-    <!-- Call To Action Start -->
-    <section class="cta" data-aos="fade-up" data-aos-delay="0">
-        <div class="container">
-            <div class="cta-content d-xl-flex align-items-center justify-content-around text-center text-xl-left">
-                <div class="content" data-aos="fade-right" data-aos-delay="200">
-                    <h2>POUR CONSTRUIRE UN SITE WEB MODERNE ADAPTÉ A VOS <br> ACTIVITÉS ET VOS ÉVENEMENTS.</h2>
-                    <p>    Nous sommes disponibles 24h/7 pour vous satisfaire.</p>
-                </div>
-                <div class="subscribe-btn" data-aos="fade-left" data-aos-delay="400" data-aos-offset="0">
-                    <a href="https://wa.me/+22899915677"target="_blank" class="btn btn-primary">Incrivez-nous en un clic ! </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Call To Action End -->
-
-
-      <!-- Featured Start -->
-      <section class="featured">
-        <div class="container">
-            <div class="row">
-                <div class="title"data-aos="fade-left" data-aos-delay="400" data-aos-duration="800">
-                    <h6 class="title-primary">Blue-etech Informatic</h6>
-                    <h1 class="title-blue">Nous sommes là pour vous !</h1>
-                </div>
-                <div class="grid-container" data-aos="fade-left" data-aos-delay="400" data-aos-duration="800">
-                    <div class="grid-item">
-                        <video autoplay muted  src="images/video.mp4"></video>
-                    </div>
-                    <div class="grid-item">
-                      <img src="images/Informatique.png" alt="Image 2">
-                    </div>
-                    <div class="grid-item">
-                      <img src="images/Game Center.png" alt="Image 3">
-                    </div>
-                    <div class="grid-item">
-                      <img src="images/Graphisme.png" alt="Image 4">
-                    </div>
-                </div>
-
-                
-            </div>
-            
-       <br>
-            <div class="container" style="margin-left:auto; margin-right: auto;">
-                <div class="row">
-                    <button  type="button" class="btn btn-primary btn-lg btn-block col-md-4 ">BOUTIQUE</button>
-                    <button type="button" class="btn btn-primary btn-lg btn-block col-md-4 ml-3">GAME ROOM</button>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Featured End -->
-    <!-- Services Start -->
-    <section class="services">
-        <div class="container">
-            <div class="title text-center">
-                <h6 style="background-color: rgb(0, 247, 255);">Nos Multiples domaines d'intervention</h6>
-                <h1 class="title-blue">POURQUOI NOUS CHOISIR ?</h1>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="media" data-aos="fade-up" data-aos-delay="200" data-aos-duration="400">
-                            <i></i>
-                            <img class="mr-4" src="assets/images/service1.png" alt="Web Development">
-                            <div class="media-body" >
-                                <h5 style="border-left: 10px outset rgb(44, 206, 255);">Développement web</h5>
-                                Nous vous offrons le meilleur sur le marché du digital. Ayez confiance!
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="media" data-aos="fade-up" data-aos-delay="400" data-aos-duration="600">
-                            <img class="mr-4" src="assets/images/service2.png" alt="Web Development">
-                            <div class="media-body" >
-                                <h5 style="border-left: 10px outset rgb(44, 206, 255);">Maintenance Informatique</h5>
-                                Les services de maintenance proposés sont éffaces et moins cher ! On vous remet sur pied vos Ordinateurs Portatif et UC.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="media" data-aos="fade-up" data-aos-delay="600" data-aos-duration="800">
-                            <img class="mr-4" src="assets/images/service3.png" alt="Web Development">
-                            <div class="media-body">
-                                <h5 style="border-left: 10px outset rgb(44, 206, 255);">Réseau Informatique</h5>
-                                L'objetif est de mettre en place un system réseau évolutif et adapté à vos activités au sein de vos structure.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="media" data-aos="fade-up" data-aos-delay="200" data-aos-duration="400">
-                            <img class="mr-4" src="assets/images/service4.png" alt="Web Development">
-                            <div class="media-body">
-                                <h5 style="border-left: 10px outset rgb(44, 206, 255);">Gaming Room</h5>
-                                Vous ete un fan des jeux vidéo? Bienvenue,  <a href="#" type="button" class="but">Allez ici</a> pour découvrir nos articles de jeux vidéo.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="media" data-aos="fade-up" data-aos-delay="400" data-aos-duration="600">
-                            <img class="mr-4" src="assets/images/service5.png" alt="Web Development">
-                            <div class="media-body">
-                                <h5 style="border-left: 10px outset rgb(44, 206, 255);">Infographie / Web Design</h5>
-                                Nous gerons votre image, conception et réalisation d'affiche publicitaire; Bache,Badge,Flyers, Aganda, Calendrier.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="media" data-aos="fade-up" data-aos-delay="600" data-aos-duration="800">
-                            <img class="mr-4" src="assets/images/service6.png" alt="Web Development">
-                            <div class="media-body">
-                                <h5 style="border-left: 10px outset rgb(44, 206, 255);">Electronique</h5>
-                                Flash, décodage, bypass Android. Bout de Charge telephone, Montage tactil et divers services. Pour Reparation
-                                <a href="" type="button" class="but">Cliquez ici</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Services End -->
-  
-
-    <!-- Formation -->
-    <section class="pricing-table">
-        <div class="container">
-            <div class="title text-center">
-                <h6 class="title-primary">Nos</h6>
-                <h1 class="title-blue">Formations</h1>
-            </div>
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <div class="single-pricing text-center" data-aos="fade-up" data-aos-delay="0"
-                        data-aos-duration="600">
-                        <span>Formation</span>
-                        <h2>Développement D'application</h2>
-                        <p class="desc"></p>
-                        <p><b style="color: red;">*</b> <i>Module 1</i>.</p>
-                        <p><b style="color: red;">*</b> <i>Module 2</i>.</p>
-                        <p><b style="color: red;">*</b> <i>Module 3</i> .</p>
-                        <p><b style="color: red;">*</b> <i>Module 4</i>.</p>
-                        <!-- <p class="price">25.000 F cfa</p> -->
-                        <a href="#" class="btn btn-primary">Détails et inscription</a>
-                        <svg viewBox="0 0 170 193">
-                            <path fill-rule="evenodd" fill="rgb(238, 21, 21)"
-                                d="M39.000,31.999 C39.000,31.999 -21.000,86.500 9.000,121.999 C39.000,157.500 91.000,128.500 104.000,160.999 C117.000,193.500 141.000,201.000 150.000,183.000 C159.000,165.000 172.000,99.000 167.000,87.000 C162.000,75.000 170.000,63.000 152.000,45.000 C134.000,27.000 128.000,15.999 116.000,11.000 C104.000,6.000 89.000,-0.001 89.000,-0.001 L39.000,31.999 Z" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="single-pricing text-center" data-aos="fade-up" data-aos-delay="300"
-                        data-aos-duration="600">
-                        <span>Formation</span>
-                        <h2>INFORMATIQUE BUREAUTIQUE</h2>
-                        <p class="desc"></p>
-                        
-                        <p><b style="color: red;">*</b> <i>Module 1:</i> Introduction à la bureautique</p>
-                        <p><b style="color: red;">*</b> <i>Module 2:</i> Pack Microsoft Office</p>
-                        <p><b style="color: red;">*</b> <i>Module 3:</i> Applications spécialisées dans vos domaines d'activités</p>
-                        <p><b style="color: red;">*</b> <i>Module 4:</i> Google Suite (Les Services Google)</p>
-                        <!-- <p class="price">25.000 F cfa</p> -->
-                        <a href="#" class="btn btn-primary">Détails et inscription</a>
-                        <svg viewBox="0 0 170 193">
-                            <path fill-rule="evenodd" fill="rgb(238, 21, 21)"
-                                d="M39.000,31.999 C39.000,31.999 -21.000,86.500 9.000,121.999 C39.000,157.500 91.000,128.500 104.000,160.999 C117.000,193.500 141.000,201.000 150.000,183.000 C159.000,165.000 172.000,99.000 167.000,87.000 C162.000,75.000 170.000,63.000 152.000,45.000 C134.000,27.000 128.000,15.999 116.000,11.000 C104.000,6.000 89.000,-0.001 89.000,-0.001 L39.000,31.999 Z" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="single-pricing text-center" data-aos="fade-up" data-aos-delay="600"
-                        data-aos-duration="600">
-                        <span>Formation</span>
-                        <h2>Formation en multimédia</h2>
-                        <p class="desc"></p>
-                        <p><b style="color: red;">*</b> <i>Module 1:</i> Introduction au multimédia</p>
-                        <p><b style="color: red;">*</b> <i>Module 2:</i> Graphisme et design</p>
-                        <p><b style="color: red;">*</b> <i>Module 3:</i> Montage vidéo et animation</p>
-                        <p><b style="color: red;">*</b> <i>  Module 4:</i> Conception de sites web</p>
-                        <!-- <p class="price">25.000 F cfa</p> -->
-                        <a href="#" class="btn btn-primary">Détails et inscription</a>
-                        <svg viewBox="0 0 170 193">
-                            <path fill-rule="evenodd" fill="rgb(238, 21, 21)"
-                                d="M39.000,31.999 C39.000,31.999 -21.000,86.500 9.000,121.999 C39.000,157.500 91.000,128.500 104.000,160.999 C117.000,193.500 141.000,201.000 150.000,183.000 C159.000,165.000 172.000,99.000 167.000,87.000 C162.000,75.000 170.000,63.000 152.000,45.000 C134.000,27.000 128.000,15.999 116.000,11.000 C104.000,6.000 89.000,-0.001 89.000,-0.001 L39.000,31.999 Z" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Pricing End -->
-    <!-- Recent Posts Start -->
-    <div class="container">
-        <div class="title">
-            <h6 class="title-primary text-center">Blue-etech Boutique</h6>
-            <h1 class="title-blue text-center">Boutique</h1>
-           
-            
-        </div>
-    </div>
-    
-    <section class="recent-posts">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="single-rpost d-sm-flex align-items-center" data-aos="fade-right"
-                        data-aos-duration="800">
-                        <div class="post-content text-sm-right">
-                            <time datetime="2019-04-06T13:53">12 Fev, 2023</time>
-                            <h3><a href="boutique.html">Portatif DELL LATITUDE E5440/</a></h3>
-                            <p style="color: red;"><a href="boutique.html"></a> <a href="boutique.html"></a>Prix 160 000 XOF<a href="boutique.html"></a></p>
-                            <a class="post-btn" href="boutique.html"><i class="fa fa-arrow-right"></i></a>
-                        </div>
-                        <div class="post-thumb">
-                            <img class="img-fluid" src="assets/images/post1.jpg" alt="Portatif">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="single-rpost d-sm-flex align-items-center" data-aos="fade-left" data-aos-duration="800">
-                        <div class="post-thumb">
-                            <img class="img-fluid" src="assets/images/post2.jpg" alt="Post 1">
-                        </div>
-                        <div class="post-content">
-                            <time datetime="2019-04-06T13:53">15 Oct, 2022</time>
-                            <h3><a href="boutique.html">PS3 SLIM </a></h3>
-                            <p style="color: red;"><a href="boutique.html"></a> <a href="boutique.html" style="color: red;">70 000 XOF</a><a href="boutique.html"></a></p>
-                            <a class="post-btn" href="boutique.html"><i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="single-rpost d-sm-flex align-items-center" data-aos="fade-right" data-aos-delay="200"
-                        data-aos-duration="800">
-                        <div class="post-content text-sm-right">
-                            <time datetime="2019-04-06T13:53">15 Jan, 2023</time>
-                            <h3><a href="boutique.html">PS4 FAT</a></h3>
-                            <p><a href="boutique.html"></a>, <a href="boutique.html" style="color: red;">250 000 XOF</a>, <a href="boutique.html"></a></p>
-                            <a class="post-btn" href="boutique.html"><i class="fa fa-arrow-right"></i></a>
-                        </div>
-                        <div class="post-thumb">
-                            <img class="img-fluid" src="assets/images/post3.jpg" alt="Post 1">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="single-rpost d-sm-flex align-items-center" data-aos="fade-left" data-aos-delay="200"
-                        data-aos-duration="800">
-                        <div class="post-thumb">
-                            <img class="img-fluid" src="assets/images/post4.jpg" alt="Post 1">
-                        </div>
-                        <div class="post-content">
-                            <time datetime="2019-04-06T13:53">15 Fev, 2023</time>
-                            <h3><a href="#">PS2 FAT</a></h3>
-                            <p><a href="boutique.html"></a> <a href="boutique.html" style="color: red;">35 000 XOF</a>, <a href="boutique.html"></a></p>
-                            <a class="post-btn" href="boutique.html"><i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center">
-                <a href="/Pages/boutique.html" class="btn btn-primary">Cliquez ici pour voir plus de produits</a>
-            </div>
-        </div>
-    </section>
-    <!-- Recent Posts End -->
-    <!-- Trust Start -->
-    <!-- <section class="trust">
-        <div class="container">
-            <div class="row">
-                <div class="offset-xl-1 col-xl-6" data-aos="fade-right" data-aos-delay="200" data-aos-duration="800">
-                    <div class="title">
-                        <h6 class="title-primary">about Tamplate</h6>
-                        <h1>a rich featured, epic & premium work.</h1>
-                    </div>
-                    <p>Suspendisse facilisis commodo lobortis. Nullam mollis lobortis ex vel faucibus. Proin nec viverra
-                        turpis. Nulla eget justo scelerisque, pretium purus vel, congue libero. Suspendisse potenti.
-                    </p>
-                    <h5>Web Design & Development</h5>
-                    <ul class="list-unstyled">
-                        <li>Web Content</li>
-                        <li>Website other</li>
-                        <li>Fashion</li>
-                        <li>Moblie & Tablette</li>
-                    </ul>
-                </div>
-                <div class="col-xl-5 gallery">
-                    <div class="row no-gutters h-100" id="lightgallery">
-                        <a href="https://lorempixel.com/600/400/" class="w-50 h-100 gal-img" data-aos="fade-up"
-                            data-aos-delay="200" data-aos-duration="400">
-                            <img class="img-fluid" src="assets/images/gallery1.jpg" alt="Gallery Image">
-                            <i class="fa fa-caret-right"></i>
-                        </a>
-                        <a href="https://lorempixel.com/600/400/" class="w-50 h-50 gal-img" data-aos="fade-up"
-                            data-aos-delay="400" data-aos-duration="600">
-                            <img class="img-fluid" src="assets/images/gallery2.jpg" alt="Gallery Image">
-                            <i class="fa fa-caret-right"></i>
-                        </a>
-                        <a href="https://lorempixel.com/600/400/" class="w-50 h-50 gal-img gal-img3" data-aos="fade-up"
-                            data-aos-delay="0" data-aos-duration="600">
-                            <img class="img-fluid" src="assets/images/gallery3.jpg" alt="Gallery Image">
-                            <i class="fa fa-caret-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- Trust End -->
-    
-    <!-- Testimonial and Clients Start -->
-    <!-- <section class="testimonial-and-clients">
-        <div class="container">
-            <div class="testimonials">
-                <div class="swiper-container test-slider">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide text-center">
-                            <div class="row">
-                                <div class="offset-lg-1 col-lg-10">
-                                    <div class="test-img" data-aos="fade-up" data-aos-delay="0" data-aos-offset="0"><img
-                                            src="assets/images/test1.png" alt="Testimonial 1"></div>
-                                    <h5 data-aos="fade-up" data-aos-delay="200" data-aos-duration="600"
-                                        data-aos-offset="0">John</h5>
-                                    <span data-aos="fade-up" data-aos-delay="400" data-aos-duration="600"
-                                        data-aos-offset="0">UI/UX
-                                        Designer</span>
-                                    <p data-aos="fade-up" data-aos-delay="600" data-aos-duration="600"
-                                        data-aos-offset="0">Ash's tactics &
-                                        books have helped me a lot in my understanding on how social
-                                        media
-                                        advertising works.I can say that he is one of the best development professionals
-                                        i have
-                                        dealt with so far. His experience is great & he is such a great & pleasant
-                                        person to
-                                        work with as he understands what you are</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide text-center">
-                            <div class="row">
-                                <div class="offset-lg-1 col-lg-10">
-                                    <div class="test-img" data-aos="fade-up" data-aos-delay="0" data-aos-offset="0"><img
-                                            src="assets/images/test1.png" alt="Testimonial 1"></div>
-                                    <h5 data-aos="fade-up" data-aos-delay="200" data-aos-duration="600"
-                                        data-aos-offset="0">John</h5>
-                                    <span data-aos="fade-up" data-aos-delay="400" data-aos-duration="600"
-                                        data-aos-offset="0">UI/UX
-                                        Designer</span>
-                                    <p data-aos="fade-up" data-aos-delay="600" data-aos-duration="600"
-                                        data-aos-offset="0">Ash's tactics &
-                                        books have helped me a lot in my understanding on how social
-                                        media
-                                        advertising works.I can say that he is one of the best development professionals
-                                        i have
-                                        dealt with so far. His experience is great & he is such a great & pleasant
-                                        person to
-                                        work with as he understands what you are</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide text-center">
-                            <div class="row">
-                                <div class="offset-lg-1 col-lg-10">
-                                    <div class="test-img" data-aos="fade-up" data-aos-delay="0" data-aos-offset="0"><img
-                                            src="assets/images/test1.png" alt="Testimonial 1"></div>
-                                    <h5 data-aos="fade-up" data-aos-delay="200" data-aos-duration="600"
-                                        data-aos-offset="0">John</h5>
-                                    <span data-aos="fade-up" data-aos-delay="400" data-aos-duration="600"
-                                        data-aos-offset="0">UI/UX
-                                        Designer</span>
-                                    <p data-aos="fade-up" data-aos-delay="600" data-aos-duration="600"
-                                        data-aos-offset="0">Ash's tactics &
-                                        books have helped me a lot in my understanding on how social
-                                        media
-                                        advertising works.I can say that he is one of the best development professionals
-                                        i have
-                                        dealt with so far. His experience is great & he is such a great & pleasant
-                                        person to
-                                        work with as he understands what you are</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="test-pagination"></div>
-                </div>
-            </div>
-            <div class="clients" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
-                <div class="swiper-container clients-slider">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="assets/images/client1.png" alt="Client 1">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="assets/images/client2.png" alt="Client 2">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="assets/images/client3.png" alt="Client 3">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="assets/images/client4.png" alt="Client 4">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="assets/images/client5.png" alt="Client 5">
-                        </div>
-                    </div>
-                    <div class="test-pagination"></div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- Testimonial and Clients End -->
-    <!-- Call To Action 2 Start -->
-    <!-- <section class="cta cta2" data-aos="fade-up" data-aos-delay="0">
-        <div class="container">
-            <div class="cta-content d-xl-flex align-items-center justify-content-around text-center text-xl-left">
-                <div class="content" data-aos="fade-right" data-aos-delay="200">
-                    <h2>FOR BUILDING THE MODERN WEBSITE</h2>
-                    <p>Packed with all the goodies you can get, Kallyas is our flagship premium template.</p>
-                </div>
-                <div class="subscribe-btn" data-aos="fade-left" data-aos-delay="400" data-aos-offset="0">
-                    <a href="#" class="btn btn-primary">Join Newsletter</a>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- Call To Action 2 End -->
-    <!-- Footer Start -->
-    <footer>
-        <!-- Widgets Start -->
-        <div class="footer-widgets">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-xl-3">
-                        <div class="single-widget contact-widget" data-aos="fade-up" data-aos-delay="0">
-                            <!-- <h6 class="widget-tiltle">&nbsp;</h6> -->
-                            <!-- <p>By subscribing to our mailing list you will always be update with the latest news from
-                                us.
-                            </p> -->
-                            <div class="media">
-                                <i class="fa fa-map-marker"></i>
-                                <div class="media-body ml-3">
-                                    <h6>Address</h6>
-                                    Agoe-Nyeve,<br>
-                                    Sur la route, Mission Tové.
-                                </div>
-                            </div>
-                           
-                           
-                            
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-3 single-widget contact-widget">
-                        <div class="media">
-                            <i class="fa fa-envelope-o"></i>
-                            <div class="media-body ml-3">
-                                <h6>Vous avez une question ou un consiel à demander ?</h6>
-                                <a href="mailto:ezeckiellossavihlontor.com">ezeckiellossavihlontor.com</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-3 single-widget contact-widget">
-                        <div class="media">
-                            <i class="fa fa-phone"></i>
-                            <div class="media-body ml-3">
-                                <h6>Appel direct</h6>
-                                <a href="tel:+22890146415"> +228 99 91 56 77 / 90 14 64 15</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-3">
-                        <div class="container">
-                            <h2 class="text-white">Contactez-nous sur whatsapp</h2>
-                            <form>
-                            <!-- <div class="form-group">
-                                <label for="name">Nom</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter name">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Address Email </label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter email">
-                            </div> -->
-                            <div class="form-group">
-                                <label for="message text-warning">Message</label>
-                                <textarea class="form-control" id="msg" placeholder="Exprimez-vous ici!" rows="3"></textarea>
-                            </div>
-                            <a class="btn btn-primary"  onclick="sendWa()" target="_blank">Envoyer</a>
-                            
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Widgets End -->
-        
-    </footer>
-    <script>
-        function sendWa(){
-            var message = document.getElementById("msg").value
-            location.href  = "https://wa.me/90146415?text=" + message
-        }
-    </script>
-    <!--jQuery-->
-    <script src="assets/js/jquery-3.3.1.js"></script>
-    <!--Plugins-->
-    <script src="assets/js/bootstrap.bundle.js"></script>
-    <script src="assets/js/loaders.css.js"></script>
-    <script src="assets/js/aos.js"></script>
-    <script src="assets/js/swiper.min.js"></script>
-    <script src="assets/js/lightgallery-all.min.js"></script>
-    <!--Template Script-->
-    <script src="assets/js/main.js"></script>
+<script>
+/* Nav scroll */
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);
+});
+/* Nav mobile */
+document.getElementById('navToggle').addEventListener('click',()=>{
+  document.getElementById('navMobile').classList.toggle('open');
+});
+/* AOS simple */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('aos-animate');});
+},{threshold:0.12});
+document.querySelectorAll('[data-aos]').forEach(el=>obs.observe(el));
+/* Counter animation */
+function animateCount(el,target){
+  let c=0;const step=Math.ceil(target/60);
+  const iv=setInterval(()=>{c=Math.min(c+step,target);el.innerHTML=c+(el.dataset.suffix||'');if(c>=target)clearInterval(iv);},25);
+}
+</script>
 </body>
-
 </html>

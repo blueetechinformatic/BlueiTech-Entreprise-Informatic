@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contactez BLUE iTECH — Formulaire, WhatsApp, téléphone, email et localisation à Lomé, Togo.">
+  <title>Contact — BLUE iTECH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="_shared.css">
+  <style>
+    /* Contact layout */
+    .contact-grid { display:grid; grid-template-columns:1fr 1.6fr; gap:48px; align-items:start; }
+
+    /* Info sidebar */
+    .contact-info { display:flex; flex-direction:column; gap:16px; }
+
+    .contact-channel {
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--radius-lg); padding:22px;
+      display:flex; align-items:flex-start; gap:16px;
+      transition:border-color .2s, box-shadow .2s, transform .2s;
+      text-decoration:none; color:inherit;
+    }
+    .contact-channel:hover { border-color:rgba(0,87,255,0.35); box-shadow:var(--shadow-md); transform:translateX(4px); }
+
+    .contact-channel-icon {
+      width:52px; height:52px; border-radius:14px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center; font-size:22px;
+    }
+    .ch-wa    { background:linear-gradient(135deg,#25D366,#128C7E); }
+    .ch-phone { background:linear-gradient(135deg,var(--blue),var(--blue-dark)); }
+    .ch-email { background:linear-gradient(135deg,#EA4335,#C0392B); }
+    .ch-map   { background:linear-gradient(135deg,#FF6A00,#C04000); }
+    .ch-hours { background:linear-gradient(135deg,#6A0DAD,#4A0090); }
+
+    .contact-channel-info { flex:1; }
+    .contact-channel-label {
+      font-size:10px; font-weight:700; letter-spacing:1.5px;
+      text-transform:uppercase; color:var(--text-muted); margin-bottom:4px;
+    }
+    .contact-channel-value {
+      font-family:'Sora',sans-serif; font-size:15px; font-weight:700; color:var(--text);
+      margin-bottom:2px;
+    }
+    .contact-channel-sub { font-size:12px; color:var(--text-muted); }
+    .contact-channel-arrow { color:var(--text-muted); font-size:12px; margin-top:6px; transition:color .2s; }
+    .contact-channel:hover .contact-channel-arrow { color:var(--blue); }
+
+    /* Devis form */
+    .devis-card {
+      background:var(--white); border:1.5px solid var(--border);
+      border-radius:var(--radius-lg); overflow:hidden;
+      box-shadow:var(--shadow-sm);
+    }
+    .devis-card-header {
+      background:linear-gradient(135deg,var(--blue-deep),var(--blue));
+      padding:28px 32px; position:relative; overflow:hidden;
+    }
+    .devis-card-header::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 60% 80% at 90% 20%,rgba(0,198,255,0.15),transparent),
+                 linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),
+                 linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);
+      background-size:auto,30px 30px,30px 30px;
+    }
+    .devis-card-header h2 { color:#fff; font-size:1.5rem; margin-bottom:4px; position:relative; z-index:1; }
+    .devis-card-header p { color:rgba(255,255,255,0.7); font-size:14px; position:relative; z-index:1; }
+    .devis-card-body { padding:32px; }
+
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+
+    .service-checkboxes { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .service-checkbox { display:flex; align-items:center; gap:8px; cursor:pointer; }
+    .service-checkbox input { accent-color:var(--blue); width:16px; height:16px; cursor:pointer; }
+    .service-checkbox span { font-size:13px; color:var(--text); }
+
+    .budget-pills { display:flex; flex-wrap:wrap; gap:8px; }
+    .budget-pill {
+      padding:7px 16px; border-radius:50px; border:1.5px solid var(--border);
+      font-family:'Sora',sans-serif; font-size:12px; font-weight:700;
+      color:var(--text-muted); cursor:pointer; transition:all .2s; background:transparent;
+    }
+    .budget-pill.selected, .budget-pill:hover { background:var(--blue); color:#fff; border-color:var(--blue); }
+
+    /* Map */
+    .map-wrap {
+      border-radius:var(--radius-lg); overflow:hidden;
+      border:1.5px solid var(--border); box-shadow:var(--shadow-sm);
+      position:relative;
+    }
+    .map-wrap iframe { display:block; width:100%; height:350px; border:none; }
+    .map-overlay-badge {
+      position:absolute; top:16px; left:16px;
+      background:rgba(255,255,255,0.95); backdrop-filter:blur(8px);
+      border:1px solid var(--border); border-radius:12px;
+      padding:12px 16px; box-shadow:var(--shadow-sm);
+      display:flex; align-items:center; gap:10px;
+    }
+    .map-overlay-badge i { color:var(--blue); font-size:18px; }
+    .map-overlay-badge strong { font-family:'Sora',sans-serif; font-size:13px; font-weight:700; color:var(--text); display:block; }
+    .map-overlay-badge span { font-size:12px; color:var(--text-muted); }
+
+    /* FAQ mini */
+    .faq-mini { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .faq-mini-item {
+      background:var(--white); border:1px solid var(--border);
+      border-radius:var(--radius); padding:20px;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .faq-mini-item:hover { border-color:rgba(0,87,255,0.3); box-shadow:var(--shadow-sm); }
+    .faq-mini-item h4 { font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+    .faq-mini-item h4 i { color:var(--blue); font-size:13px; }
+    .faq-mini-item p { font-size:13px; color:var(--text-muted); line-height:1.65; }
+
+    /* Success state */
+    .form-success {
+      display:none; text-align:center; padding:40px 24px;
+    }
+    .form-success-icon { font-size:56px; margin-bottom:16px; }
+    .form-success h3 { font-size:20px; margin-bottom:8px; color:var(--text); }
+    .form-success p { font-size:14px; color:var(--text-muted); }
+
+    @media(max-width:992px){
+      .contact-grid { grid-template-columns:1fr; }
+      .form-row { grid-template-columns:1fr; }
+      .faq-mini { grid-template-columns:1fr; }
+      .service-checkboxes { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+      </div>
+      <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li><li><a href="service.html">Services</a></li>
+      <li><a href="boutique.html">Réalisations</a></li><li><a href="shop.html">Boutique</a></li><li><a href="formation.html">Formation</a></li>
+      <li><a href="propos.html">À propos</a></li><li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-cta"><a href="#devis" class="btn btn-primary"><i class="fas fa-file-invoice"></i> Devis gratuit</a></div>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html">Accueil</a><a href="service.html">Services</a>
+  <a href="boutique.html">Réalisations</a><a href="shop.html">Boutique</a><a href="formation.html">Formation</a>
+  <a href="propos.html">À propos</a><a href="contact.html">Contact</a>
+  <a href="#devis" class="btn btn-primary">Demander un devis</a>
+</div>
+
+<!-- HERO -->
+<section class="hero-bg page-hero">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="tag white" data-aos>Parlons de votre projet</div>
+    <h1 data-aos data-aos-delay="100">Contactez-<span style="color:var(--accent)">nous</span></h1>
+    <p data-aos data-aos-delay="200">Devis gratuit, réponse rapide. Notre équipe est disponible du lundi au samedi de 8h à 18h — et sur WhatsApp à tout moment.</p>
+    <div style="display:flex;gap:16px;justify-content:center;margin-top:28px;flex-wrap:wrap;" data-aos data-aos-delay="300">
+      <div class="badge-pill" style="color:#fff;background:rgba(37,211,102,0.2);border-color:rgba(37,211,102,0.4);">
+        <i class="fas fa-circle" style="color:#25D366;font-size:8px;"></i> WhatsApp disponible 24/7
+      </div>
+      <div class="badge-pill" style="color:#fff;background:rgba(0,198,255,0.15);border-color:rgba(0,198,255,0.35);">
+        <i class="fas fa-bolt"></i> Réponse sous 2h en semaine
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT MAIN -->
+<section class="section" id="devis">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Sidebar infos -->
+      <div class="contact-info" data-aos>
+
+        <a href="https://wa.me/90146415" target="_blank" class="contact-channel">
+          <div class="contact-channel-icon ch-wa"><i class="fab fa-whatsapp" style="color:#fff;"></i></div>
+          <div class="contact-channel-info">
+            <div class="contact-channel-label">WhatsApp</div>
+            <div class="contact-channel-value">+228 90 14 64 15</div>
+            <div class="contact-channel-sub">Réponse rapide, disponible 24/7</div>
+          </div>
+          <i class="fas fa-arrow-right contact-channel-arrow"></i>
+        </a>
+
+        <a href="tel:+22890146415" class="contact-channel">
+          <div class="contact-channel-icon ch-phone"><i class="fas fa-phone-alt" style="color:#fff;"></i></div>
+          <div class="contact-channel-info">
+            <div class="contact-channel-label">Téléphone</div>
+            <div class="contact-channel-value">+228 90 14 64 15</div>
+            <div class="contact-channel-sub">Lun–Sam · 8h00 – 18h00</div>
+          </div>
+          <i class="fas fa-arrow-right contact-channel-arrow"></i>
+        </a>
+
+        <a href="mailto:contact@blueitech.tg" class="contact-channel">
+          <div class="contact-channel-icon ch-email"><i class="fas fa-envelope" style="color:#fff;"></i></div>
+          <div class="contact-channel-info">
+            <div class="contact-channel-label">Email</div>
+            <div class="contact-channel-value">contact@blueitech.tg</div>
+            <div class="contact-channel-sub">Réponse sous 24h ouvrables</div>
+          </div>
+          <i class="fas fa-arrow-right contact-channel-arrow"></i>
+        </a>
+
+        <div class="contact-channel" style="cursor:default;">
+          <div class="contact-channel-icon ch-map"><i class="fas fa-map-marker-alt" style="color:#fff;"></i></div>
+          <div class="contact-channel-info">
+            <div class="contact-channel-label">Adresse</div>
+            <div class="contact-channel-value">Lomé, Togo</div>
+            <div class="contact-channel-sub">Hédzranawoé, Quartier Agoè</div>
+          </div>
+        </div>
+
+        <div class="contact-channel" style="cursor:default;">
+          <div class="contact-channel-icon ch-hours"><i class="fas fa-clock" style="color:#fff;"></i></div>
+          <div class="contact-channel-info">
+            <div class="contact-channel-label">Horaires</div>
+            <div class="contact-channel-value">Lun – Sam : 8h – 18h</div>
+            <div class="contact-channel-sub">Dimanche : urgences uniquement</div>
+          </div>
+        </div>
+
+        <!-- Social links -->
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:20px;">
+          <p style="font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;">Suivez-nous</p>
+          <div style="display:flex;gap:10px;">
+            <a href="#" style="width:40px;height:40px;border-radius:10px;background:var(--off-white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:16px;transition:background .2s,color .2s;" onmouseover="this.style.background='#1877F2';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='';"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/90146415" target="_blank" style="width:40px;height:40px;border-radius:10px;background:var(--off-white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:16px;transition:background .2s,color .2s;" onmouseover="this.style.background='#25D366';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='';"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" style="width:40px;height:40px;border-radius:10px;background:var(--off-white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:16px;transition:background .2s,color .2s;" onmouseover="this.style.background='#0077B5';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='';"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" style="width:40px;height:40px;border-radius:10px;background:var(--off-white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:16px;transition:background .2s,color .2s;" onmouseover="this.style.background='#1DA1F2';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='';"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Formulaire devis -->
+      <div class="devis-card" data-aos data-aos-delay="150">
+        <div class="devis-card-header">
+          <h2>Demandez votre devis gratuit</h2>
+          <p>Remplissez ce formulaire et nous vous répondons sous 2h en semaine.</p>
+        </div>
+        <div class="devis-card-body">
+          <div id="formContent">
+            <form id="devisForm" onsubmit="submitDevis(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="d-nom">Nom complet *</label>
+                  <input type="text" id="d-nom" class="form-control" placeholder="Votre nom" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="d-societe">Entreprise</label>
+                  <input type="text" id="d-societe" class="form-control" placeholder="Nom de votre société">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="d-tel">Téléphone / WhatsApp *</label>
+                  <input type="tel" id="d-tel" class="form-control" placeholder="+228 9X XX XX XX" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="d-email">Email</label>
+                  <input type="email" id="d-email" class="form-control" placeholder="votre@email.com">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Service(s) souhaité(s)</label>
+                <div class="service-checkboxes">
+                  <label class="service-checkbox"><input type="checkbox" name="service" value="Maintenance IT"> <span>🖥️ Maintenance IT</span></label>
+                  <label class="service-checkbox"><input type="checkbox" name="service" value="Réseaux"> <span>🌐 Réseaux</span></label>
+                  <label class="service-checkbox"><input type="checkbox" name="service" value="Développement"> <span>💻 Développement</span></label>
+                  <label class="service-checkbox"><input type="checkbox" name="service" value="Vidéosurveillance"> <span>📷 CCTV</span></label>
+                  <label class="service-checkbox"><input type="checkbox" name="service" value="Wi-Fi Pro"> <span>📡 Wi-Fi Pro</span></label>
+                  <label class="service-checkbox"><input type="checkbox" name="service" value="Cybersécurité"> <span>🛡️ Cybersécurité</span></label>
+                  <label class="service-checkbox"><input type="checkbox" name="service" value="Cloud"> <span>☁️ Cloud</span></label>
+                  <label class="service-checkbox"><input type="checkbox" name="service" value="Formation"> <span>🎓 Formation</span></label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Budget estimé</label>
+                <div class="budget-pills" id="budgetPills">
+                  <button type="button" class="budget-pill" onclick="selectBudget(this)">< 100 000 CFA</button>
+                  <button type="button" class="budget-pill" onclick="selectBudget(this)">100k – 500k CFA</button>
+                  <button type="button" class="budget-pill" onclick="selectBudget(this)">500k – 1M CFA</button>
+                  <button type="button" class="budget-pill" onclick="selectBudget(this)">> 1M CFA</button>
+                  <button type="button" class="budget-pill" onclick="selectBudget(this)">À définir</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="d-message">Décrivez votre besoin *</label>
+                <textarea id="d-message" class="form-control" placeholder="Décrivez votre projet, vos contraintes, vos délais souhaités..." rows="4" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="d-urgence">Urgence</label>
+                <select id="d-urgence" class="form-control">
+                  <option value="Normal">Normal (sous 1 semaine)</option>
+                  <option value="Urgent">Urgent (sous 48h)</option>
+                  <option value="Très urgent">Très urgent (aujourd'hui)</option>
+                  <option value="Planifié">Planifié (dans 1 mois+)</option>
+                </select>
+              </div>
+
+              <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button type="submit" class="btn btn-primary" style="flex:1;justify-content:center;">
+                  <i class="fas fa-paper-plane"></i> Envoyer la demande
+                </button>
+                <a href="https://wa.me/90146415" target="_blank" class="btn" style="background:#25D366;color:#fff;box-shadow:0 4px 16px rgba(37,211,102,0.4);flex:1;justify-content:center;">
+                  <i class="fab fa-whatsapp"></i> Via WhatsApp
+                </a>
+              </div>
+            </form>
+          </div>
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">✅</div>
+            <h3>Demande envoyée !</h3>
+            <p>Merci pour votre demande. Notre équipe vous contactera sous 2h en semaine pour discuter de votre projet.</p>
+            <a href="index.html" class="btn btn-primary" style="margin-top:20px;display:inline-flex;">
+              <i class="fas fa-home"></i> Retour à l'accueil
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CARTE -->
+<section class="section-sm" style="background:var(--off-white);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div class="tag" data-aos>Localisation</div>
+      <h2 class="section-title" data-aos data-aos-delay="100">Nous trouver <span class="hl">à Lomé</span></h2>
+    </div>
+    <div class="map-wrap" data-aos>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127045.03395939537!2d1.1272898!3d6.1374759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1023e1c113185a7b%3A0x3c6007a8f9742150!2sLom%C3%A9%2C%20Togo!5e0!3m2!1sfr!2s!4v1620000000000!5m2!1sfr!2s"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Localisation BLUE iTECH Lomé">
+      </iframe>
+      <div class="map-overlay-badge">
+        <i class="fas fa-map-marker-alt"></i>
+        <div><strong>BLUE iTECH</strong><span>Lomé, Togo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ RAPIDE -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div class="tag" data-aos>FAQ</div>
+      <h2 class="section-title" data-aos data-aos-delay="100">Questions <span class="hl">fréquentes</span></h2>
+    </div>
+    <div class="faq-mini">
+      <div class="faq-mini-item" data-aos><h4><i class="fas fa-question-circle"></i> Le devis est-il vraiment gratuit ?</h4><p>Oui, absolument. Notre devis est gratuit, sans engagement et sans frais cachés. Nous prenons le temps d'analyser votre besoin avant de vous proposer une solution.</p></div>
+      <div class="faq-mini-item" data-aos data-aos-delay="100"><h4><i class="fas fa-question-circle"></i> Intervenez-vous en dehors de Lomé ?</h4><p>Principalement à Lomé, mais nous pouvons nous déplacer en région selon la nature du projet. Contactez-nous pour évaluer la faisabilité.</p></div>
+      <div class="faq-mini-item" data-aos data-aos-delay="200"><h4><i class="fas fa-question-circle"></i> Quels modes de paiement acceptez-vous ?</h4><p>Espèces, TMoney, Flooz, virement bancaire et paiement en plusieurs fois selon le montant du projet. Nous nous adaptons à vos contraintes.</p></div>
+      <div class="faq-mini-item" data-aos data-aos-delay="300"><h4><i class="fas fa-question-circle"></i> Proposez-vous un service après-vente ?</h4><p>Oui. Chaque projet est accompagné d'une garantie et d'un suivi post-livraison. Nous proposons également des contrats de maintenance annuels.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <img src="logo.png" alt="BLUE iTECH Logo" class="nav-logo-icon">
+        </div>
+        <div class="nav-logo-text">BLUE <span>iTECH</span></div>
+      </a><p>Votre partenaire IT de confiance à Lomé, Togo.</p><div class="footer-socials"><a href="https://wa.me/90146415" class="footer-social" target="_blank"><i class="fab fa-whatsapp"></i></a><a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a><a href="#" class="footer-social"><i class="fab fa-linkedin-in"></i></a></div></div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="service.html"><i class="fas fa-chevron-right"></i> Maintenance IT</a></li><li><a href="service.html"><i class="fas fa-chevron-right"></i> Réseaux</a></li><li><a href="service.html"><i class="fas fa-chevron-right"></i> Développement</a></li><li><a href="service.html"><i class="fas fa-chevron-right"></i> Vidéosurveillance</a></li></ul></div>
+      <div class="footer-col"><h4>Entreprise</h4><ul><li><a href="propos.html"><i class="fas fa-chevron-right"></i> À propos</a></li><li><a href="boutique.html"><i class="fas fa-chevron-right"></i> Réalisations</a></li><li><a href="formation.html"><i class="fas fa-chevron-right"></i> Formations</a></li><li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul><li><a href="https://wa.me/90146415"><i class="fab fa-whatsapp"></i> +228 90 14 64 15</a></li><li><a href="mailto:contact@blueitech.tg"><i class="fas fa-envelope"></i> contact@blueitech.tg</a></li><li><a href="#"><i class="fas fa-map-marker-alt"></i> Lomé, Togo</a></li><li><a href="#"><i class="fas fa-clock"></i> Lun–Sam : 8h–18h</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 <span>BLUE iTECH</span>. Tous droits réservés.</p><p>Conçu avec ❤️ à <span>Lomé, Togo</span></p></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/90146415" target="_blank" class="wa-float"><svg viewBox="0 0 1024 1024"><defs><linearGradient id="waG" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#61fd7d"/><stop offset="1" stop-color="#2bb826"/></linearGradient></defs><circle cx="512" cy="512" r="500" fill="url(#waG)"/><path fill="#fff" d="M783.302 243.246c-69.329-69.387-161.529-107.619-259.763-107.658-202.402 0-367.133 164.668-367.214 367.072-.026 64.699 16.883 127.854 49.017 183.522l-52.096 190.229 194.665-51.047c53.636 29.244 114.022 44.656 175.482 44.682h.151c202.382 0 367.128-164.688 367.21-367.094.039-98.087-38.121-190.319-107.452-259.706zM523.544 808.047h-.125c-54.767-.021-108.483-14.729-155.344-42.529l-11.146-6.612-115.517 30.293 30.834-112.592-7.259-11.544c-30.552-48.579-46.688-104.729-46.664-162.379.066-168.229 136.985-305.096 305.339-305.096 81.521.031 158.154 31.811 215.779 89.482s89.342 134.332 89.312 215.859c-.066 168.243-136.984 305.118-305.209 305.118zm167.415-228.515c-9.177-4.591-54.286-26.782-62.697-29.843-8.41-3.062-14.526-4.592-20.645 4.592-6.115 9.182-23.699 29.843-29.053 35.964-5.352 6.122-10.704 6.888-19.879 2.296-9.176-4.591-38.74-14.277-73.786-45.526-27.275-24.319-45.691-54.359-51.043-63.543-5.352-9.183-.569-14.146 4.024-18.72 4.127-4.109 9.175-10.713 13.763-16.069 4.587-5.355 6.117-9.183 9.175-15.304 3.059-6.122 1.529-11.479-.765-16.07-2.293-4.591-20.644-49.739-28.29-68.104-7.447-17.886-15.013-15.466-20.645-15.747-5.346-.266-11.469-.322-17.585-.322s-16.057 2.295-24.467 11.478-32.113 31.374-32.113 76.521c0 45.147 32.877 88.764 37.465 94.885 4.588 6.122 64.699 98.771 156.741 138.502 21.892 9.45 38.982 15.094 52.308 19.322 21.98 6.979 41.982 5.995 57.793 3.634 17.628-2.633 54.284-22.189 61.932-43.615 7.646-21.427 7.646-39.791 5.352-43.617-2.294-3.826-8.41-6.122-17.585-10.714z"/></svg></a>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);});
+document.getElementById('navToggle').addEventListener('click',()=>{document.getElementById('navMobile').classList.toggle('open');});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('aos-animate');});},{threshold:0.1});
+document.querySelectorAll('[data-aos]').forEach(el=>obs.observe(el));
+
+/* ── Config Telegram ── */
+const TG_TOKEN   = '8848283061:AAEjnHEQJbbnbqlREOY8P-4V3fBOg_pKbWU';
+const TG_CHAT_ID = '7572763935';
+
+async function sendToTelegram(text) {
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TG_CHAT_ID,
+        text: text,
+        parse_mode: 'Markdown'
+      })
+    });
+    return res.ok;
+  } catch(err) {
+    console.error('Telegram error:', err);
+    return false;
+  }
+}
+
+let selectedBudget = '';
+function selectBudget(btn){
+  document.querySelectorAll('.budget-pill').forEach(p=>p.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedBudget = btn.textContent;
+}
+
+async function submitDevis(e){
+  e.preventDefault();
+
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+
+  const nom      = document.getElementById('d-nom').value.trim();
+  const tel      = document.getElementById('d-tel').value.trim();
+  const societe  = document.getElementById('d-societe').value.trim();
+  const email    = document.getElementById('d-email').value.trim();
+  const message  = document.getElementById('d-message').value.trim();
+  const urgence  = document.getElementById('d-urgence').value;
+  const services = [...document.querySelectorAll('input[name="service"]:checked')]
+                     .map(c => c.value).join(', ') || 'Non précisé';
+
+  const txt =
+`🔵 *NOUVELLE DEMANDE DE DEVIS*
+━━━━━━━━━━━━━━━━━━━━━
+👤 *Nom :* ${nom}
+🏢 *Société :* ${societe || '—'}
+📞 *Téléphone :* ${tel}
+📧 *Email :* ${email || '—'}
+━━━━━━━━━━━━━━━━━━━━━
+🛠️ *Services :* ${services}
+💰 *Budget :* ${selectedBudget || 'Non précisé'}
+⚡ *Urgence :* ${urgence}
+━━━━━━━━━━━━━━━━━━━━━
+📝 *Message :*
+${message}
+━━━━━━━━━━━━━━━━━━━━━
+🌐 _Reçu via blueitech.tg/contact_`;
+
+  const ok = await sendToTelegram(txt);
+
+  if (ok) {
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').style.display  = 'block';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer la demande';
+    alert('❌ Erreur d\'envoi. Veuillez nous contacter directement sur WhatsApp.');
+  }
+}
+</script>
+</body>
+</html>
